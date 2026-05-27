@@ -7,7 +7,3 @@ export function cn(...inputs: ClassValue[]) {
 export function isExternalUrl(href: string) {
   return href.startsWith("http://") || href.startsWith("https://");
 }
-
-export function projectHref(slug: string) {
-  return `/projects/${slug}`;
-}

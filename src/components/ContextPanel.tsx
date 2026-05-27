@@ -3,16 +3,10 @@
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { profile } from "@/data/profile";
-import { projects } from "@/data/projects";
 import { useMountedPathname } from "@/lib/useMountedPathname";
-import { projectHref } from "@/lib/utils";
 import { Tag } from "@/components/Tag";
 
 function currentFocus(pathname: string) {
-  if (pathname.startsWith("/projects/")) {
-    const slug = pathname.split("/").filter(Boolean).at(1);
-    return projects.find((project) => project.slug === slug)?.title ?? "Project detail";
-  }
   if (pathname.startsWith("/projects")) return "Project index";
   if (pathname.startsWith("/resume")) return "Resume";
   if (pathname.startsWith("/contact")) return "Contact";
@@ -39,12 +33,6 @@ export function ContextPanel() {
           <div className="mt-3 space-y-2 text-sm">
             <Link className="focus-ring block rounded-sm text-muted hover:text-text" href="/projects">
               All projects
-            </Link>
-            <Link
-              className="focus-ring block rounded-sm text-muted hover:text-text"
-              href={projectHref("securepaste")}
-            >
-              SecurePaste
             </Link>
             <a
               className="focus-ring inline-flex items-center gap-1 rounded-sm text-muted hover:text-text"

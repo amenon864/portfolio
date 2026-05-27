@@ -28,8 +28,7 @@ export const projects: Project[] = [
     highlights: [
       "Designed frontend/backend split",
       "Uses database-backed paste storage",
-      "Built with deployment and containerization in mind",
-      "Intended as a resume-quality full-stack project",
+      "Built with deployment and containerization in mind"
     ],
     links: {
       github: "https://github.com/amenon864/SecurePaste",
@@ -47,15 +46,10 @@ export const projects: Project[] = [
     highlights: [
       "Built with Next.js App Router, TypeScript, and Tailwind CSS",
       "Designed around compact project cards and evidence-focused writing",
-      "Includes optional command palette and keyboard navigation",
-      "Public GitHub repo shows frontend code quality",
+      "Includes optional command palette and keyboard navigation"
     ],
     links: {
       github: "https://github.com/amenon864/portfolio",
     },
   },
 ];
-
-export function getProject(slug: string) {
-  return projects.find((project) => project.slug === slug);
-}

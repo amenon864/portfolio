@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     template: `%s | ${profile.name}`,
   },
   description:
-    "A fast technical index of systems, algorithms, graphics, embedded software, programming languages, and practical web tools.",
+    "Aditya Menon's personal website and portfolio",
 };
 
 export default function RootLayout({

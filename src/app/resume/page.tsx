@@ -4,14 +4,11 @@ import { Download, ExternalLink } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Tag } from "@/components/Tag";
 import { profile } from "@/data/profile";
+import { resume } from "@/data/resume";
 
 export const metadata: Metadata = {
   title: "Resume",
 };
-
-const languages = ["C", "C++", "Python", "Racket", "SQL", "TypeScript", "CSS", "Shell"];
-const technologies = ["Next.js", "FastAPI", "PostgreSQL", "Docker", "OpenCV", "Git", "Linux", "I2C"];
-const interests = ["systems", "algorithms", "embedded software", "graphics", "programming languages"];
 
 function SkillGroup({ title, items }: { title: string; items: string[] }) {
   return (
@@ -32,11 +29,7 @@ export default function ResumePage() {
   return (
     <div className="max-w-4xl space-y-9">
       <SectionHeader eyebrow="Resume" title="Technical summary">
-        <p>
-          Computer Science student at the University of Waterloo focused on systems,
-          algorithms, embedded software, graphics, programming languages, and practical
-          web tools.
-        </p>
+        <p>{resume.summary}</p>
       </SectionHeader>
 
       <div className="flex flex-wrap gap-2">
@@ -61,18 +54,11 @@ export default function ResumePage() {
           Experience highlights
         </h2>
         <ul className="space-y-2 text-muted">
-          <li className="leading-7">
-            Embedded firmware @ UW Orbital, including hardware-facing C, I2C sensor
-            communication, and overtemperature event handling.
-          </li>
-          <li className="leading-7">
-            Competitive programming and algorithmic problem solving, including a top 25
-            finish at Waterloo&apos;s local ICPC contest.
-          </li>
-          <li className="leading-7">
-            Full-stack project work with typed frontend code, API design, PostgreSQL, and
-            Dockerized local development.
-          </li>
+          {resume.experienceHighlights.map((highlight) => (
+            <li key={highlight} className="leading-7">
+              {highlight}
+            </li>
+          ))}
         </ul>
       </section>
 
@@ -81,12 +67,7 @@ export default function ResumePage() {
           Project highlights
         </h2>
         <div className="grid gap-3 sm:grid-cols-2">
-          {[
-            "SecurePaste: encrypted paste-sharing app with full-stack architecture.",
-            "UW Orbital Firmware: thermal monitoring firmware around low-level sensor communication.",
-            "Interpreter: language semantics, parsing, environments, and recursive evaluation.",
-            "Portfolio Site: static content architecture, responsive layout, and accessible navigation.",
-          ].map((item) => (
+          {resume.projectHighlights.map((item) => (
             <p key={item} className="rounded-lg border border-line bg-panel p-3 text-sm leading-6 text-muted">
               {item}
             </p>
@@ -98,9 +79,9 @@ export default function ResumePage() {
         <h2 id="skills-title" className="text-xl font-semibold text-text">
           Skills
         </h2>
-        <SkillGroup title="Languages" items={languages} />
-        <SkillGroup title="Technologies" items={technologies} />
-        <SkillGroup title="Interests" items={interests} />
+        {resume.skills.map((skillGroup) => (
+          <SkillGroup key={skillGroup.title} title={skillGroup.title} items={skillGroup.items} />
+        ))}
       </section>
     </div>
   );

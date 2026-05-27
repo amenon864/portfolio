@@ -4,8 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ExternalLink, Github, Mail, Search } from "lucide-react";
 import { profile } from "@/data/profile";
-import { projects } from "@/data/projects";
-import { projectHref } from "@/lib/utils";
 
 type CommandItem = {
   label: string;
@@ -33,11 +31,6 @@ export function CommandPalette() {
       { label: "Go to Projects", hint: "Navigation", action: () => router.push("/projects") },
       { label: "Go to Resume", hint: "Navigation", action: () => router.push("/resume") },
       { label: "Go to Contact", hint: "Navigation", action: () => router.push("/contact") },
-      ...projects.map((project) => ({
-        label: `Open ${project.title}`,
-        hint: "Project",
-        action: () => router.push(projectHref(project.slug)),
-      })),
       {
         label: "Copy email",
         hint: profile.email,

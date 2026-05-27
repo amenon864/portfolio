@@ -20,7 +20,7 @@ export function Sidebar() {
     <aside className="sticky top-0 hidden h-screen border-r border-line px-5 py-7 lg:block">
       <div className="flex h-full flex-col">
         <Link href="/" className="focus-ring rounded-sm">
-          <p className="text-base font-semibold text-text">{profile.name}</p>
+          <p className="text-base font-semibold text-text">{profile.initials}.</p>
           <p className="mt-1 text-xs leading-5 text-muted">{profile.location}</p>
         </Link>
         <nav aria-label="Primary" className="mt-8 space-y-1">

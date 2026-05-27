@@ -1,5 +1,6 @@
 export const profile = {
   name: "Aditya Menon",
+  initials: "asm",
   title: "Computer Science student at the University of Waterloo",
   location: "Waterloo, Ontario",
   email: "adityamenon864@gmail.com",

@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { ExternalLink, Github, Layers } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 import { Tag } from "@/components/Tag";
 import type { Project } from "@/data/projects";
-import { isExternalUrl, projectHref } from "@/lib/utils";
+import { isExternalUrl } from "@/lib/utils";
 
 type ProjectCardProps = {
   project: Project;
@@ -38,7 +38,6 @@ function LinkButton({
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const detailHref = projectHref(project.slug);
   const caseStudy = project.links?.caseStudy;
 
   return (
@@ -49,11 +48,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         ))}
       </div>
       <div className="mt-4">
-        <h2 className="text-lg font-semibold text-text">
-          <Link className="focus-ring rounded-sm" href={detailHref}>
-            {project.title}
-          </Link>
-        </h2>
+        <h2 className="text-lg font-semibold text-text">{project.title}</h2>
         <p className="mt-1 text-sm text-muted">{project.subtitle}</p>
       </div>
       <p className="mt-4 text-sm leading-6 text-muted">{project.summary}</p>
@@ -66,9 +61,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </p>
       ) : null}
       <div className="mt-auto flex flex-wrap gap-2 pt-5">
-        <LinkButton href={detailHref} icon={<Layers aria-hidden="true" size={15} />}>
-          View project
-        </LinkButton>
         {project.links?.github ? (
           <LinkButton href={project.links.github} icon={<Github aria-hidden="true" size={15} />}>
             GitHub
@@ -79,9 +71,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             Live Demo
           </LinkButton>
         ) : null}
-        {caseStudy && caseStudy !== detailHref ? (
-          <LinkButton href={caseStudy}>Case Study</LinkButton>
-        ) : null}
+        {caseStudy ? <LinkButton href={caseStudy}>Case Study</LinkButton> : null}
       </div>
     </article>
   );

@@ -20,7 +20,7 @@ export function TopNav() {
     <header className="sticky top-0 z-30 border-b border-line bg-canvas/95 px-4 py-3 backdrop-blur lg:hidden">
       <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-3">
         <Link href="/" className="focus-ring min-w-0 rounded-sm">
-          <p className="truncate text-sm font-semibold text-text">{profile.name}</p>
+          <p className="truncate text-sm font-semibold text-text">{profile.initials}.</p>
         </Link>
         <nav aria-label="Mobile primary" className="flex items-center gap-1">
           {navItems.map((item) => {
