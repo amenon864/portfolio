@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Command, FileText, FolderKanban, Home, Mail } from "lucide-react";
+import { ModeToggle } from "@/components/ModeToggle";
 import { profile } from "@/data/profile";
 import { cn } from "@/lib/utils";
 import { useMountedPathname } from "@/lib/useMountedPathname";
@@ -17,11 +18,14 @@ export function TopNav() {
   const pathname = useMountedPathname();
 
   return (
-    <header className="sticky top-0 z-30 border-b border-line bg-canvas/95 px-4 py-3 backdrop-blur lg:hidden">
-      <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-3">
-        <Link href="/" className="focus-ring min-w-0 rounded-sm">
-          <p className="truncate text-sm font-semibold text-text">{profile.initials}.</p>
-        </Link>
+    <header className="sticky top-0 z-30 border-b border-line bg-canvas px-4 py-3 lg:hidden">
+      <div className="mx-auto flex max-w-[1500px] flex-wrap items-center justify-between gap-2">
+        <div className="flex min-w-0 items-center gap-3">
+          <Link href="/" className="focus-ring min-w-0 rounded-sm">
+            <p className="truncate text-sm font-semibold text-text">{profile.initials}.</p>
+          </Link>
+          <ModeToggle />
+        </div>
         <nav aria-label="Mobile primary" className="flex items-center gap-1">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -37,7 +41,7 @@ export function TopNav() {
                   "focus-ring inline-flex h-9 w-9 items-center justify-center rounded-md transition duration-150",
                   active
                     ? "bg-raised text-text"
-                    : "text-muted hover:bg-raised/70 hover:text-text",
+                    : "text-muted hover:bg-raised hover:text-text",
                 )}
                 aria-label={item.label}
                 aria-current={active ? "page" : undefined}
@@ -48,7 +52,7 @@ export function TopNav() {
           })}
           <button
             type="button"
-            className="focus-ring inline-flex h-9 w-9 items-center justify-center rounded-md text-muted transition duration-150 hover:bg-raised/70 hover:text-text"
+            className="focus-ring inline-flex h-9 w-9 items-center justify-center rounded-md text-muted transition duration-150 hover:bg-raised hover:text-text"
             aria-label="Open command palette"
             onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
           >

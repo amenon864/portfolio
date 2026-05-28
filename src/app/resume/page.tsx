@@ -34,14 +34,14 @@ export default function ResumePage() {
 
       <div className="flex flex-wrap gap-2">
         <a
-          className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent/50 hover:bg-raised"
+          className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"
           href={profile.resumeUrl}
         >
           <Download aria-hidden="true" size={16} />
           Resume PDF
         </a>
         <Link
-          className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent/50 hover:bg-raised"
+          className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"
           href="/projects"
         >
           <ExternalLink aria-hidden="true" size={16} />

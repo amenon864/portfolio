@@ -51,7 +51,7 @@ export default function HomePage() {
           </div>
           <Link
             href="/projects"
-            className="focus-ring inline-flex w-fit items-center gap-2 rounded-md border border-line px-3 py-2 text-sm text-text transition duration-150 hover:border-accent/50 hover:bg-raised"
+            className="focus-ring inline-flex w-fit items-center gap-2 rounded-md border border-line px-3 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"
           >
             View all projects
             <ArrowRight aria-hidden="true" size={15} />

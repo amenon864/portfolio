@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Command, FileText, FolderKanban, Home, Mail } from "lucide-react";
+import { ModeToggle } from "@/components/ModeToggle";
 import { profile } from "@/data/profile";
 import { cn } from "@/lib/utils";
 import { useMountedPathname } from "@/lib/useMountedPathname";
@@ -23,6 +24,9 @@ export function Sidebar() {
           <p className="text-base font-semibold text-text">{profile.initials}.</p>
           <p className="mt-1 text-xs leading-5 text-muted">{profile.location}</p>
         </Link>
+        <div className="mt-6">
+          <ModeToggle />
+        </div>
         <nav aria-label="Primary" className="mt-8 space-y-1">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -38,7 +42,7 @@ export function Sidebar() {
                   "focus-ring flex items-center gap-3 rounded-md px-3 py-2 text-sm transition duration-150",
                   active
                     ? "bg-raised text-text"
-                    : "text-muted hover:bg-raised/70 hover:text-text",
+                    : "text-muted hover:bg-raised hover:text-text",
                 )}
                 aria-current={active ? "page" : undefined}
               >
@@ -50,7 +54,7 @@ export function Sidebar() {
         </nav>
         <button
           type="button"
-          className="focus-ring mt-8 flex w-full items-center justify-between rounded-md border border-line px-3 py-2 text-left text-xs text-muted transition duration-150 hover:border-accent/40 hover:text-text"
+          className="focus-ring mt-8 flex w-full items-center justify-between rounded-md border border-line px-3 py-2 text-left text-xs text-muted transition duration-150 hover:border-accent hover:text-text"
           onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
         >
           <span className="inline-flex items-center gap-2">

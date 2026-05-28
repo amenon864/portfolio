@@ -12,13 +12,33 @@ export const metadata: Metadata = {
     "Aditya Menon's personal website and portfolio",
 };
 
+const displayModeScript = `
+(() => {
+  try {
+    const storedMode = window.localStorage.getItem("display-mode");
+    const mode = storedMode === "terminal" || storedMode === "docs"
+      ? storedMode
+      : window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "terminal"
+        : "docs";
+
+    document.documentElement.dataset.mode = mode;
+  } catch {
+    document.documentElement.dataset.mode = "terminal";
+  }
+})();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: displayModeScript }} />
+      </head>
       <body>
         <SiteShell>{children}</SiteShell>
       </body>

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ExternalLink, Github, Mail, Search } from "lucide-react";
 import { profile } from "@/data/profile";
+import { setDisplayMode } from "@/lib/displayMode";
 
 type CommandItem = {
   label: string;
@@ -31,6 +32,8 @@ export function CommandPalette() {
       { label: "Go to Projects", hint: "Navigation", action: () => router.push("/projects") },
       { label: "Go to Resume", hint: "Navigation", action: () => router.push("/resume") },
       { label: "Go to Contact", hint: "Navigation", action: () => router.push("/contact") },
+      { label: "Switch to Terminal mode", hint: "Display", action: () => setDisplayMode("terminal") },
+      { label: "Switch to Docs mode", hint: "Display", action: () => setDisplayMode("docs") },
       {
         label: "Copy email",
         hint: profile.email,
@@ -126,14 +129,14 @@ export function CommandPalette() {
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/55 px-4 py-20"
+      className="fixed inset-0 z-50 bg-[var(--scrim)] px-4 py-20"
       role="dialog"
       aria-modal="true"
       aria-labelledby="command-title"
       onMouseDown={() => setOpen(false)}
     >
       <div
-        className="mx-auto max-w-xl overflow-hidden rounded-lg border border-line bg-panel shadow-2xl"
+        className="mx-auto max-w-xl overflow-hidden rounded-lg border border-line bg-panel shadow-[0_18px_60px_var(--scrim)]"
         onMouseDown={(event) => event.stopPropagation()}
       >
         <div className="flex items-center gap-3 border-b border-line px-4 py-3">
@@ -157,7 +160,7 @@ export function CommandPalette() {
               <button
                 key={`${command.label}-${command.hint}`}
                 type="button"
-                className={`flex w-full items-center justify-between gap-4 rounded-md px-3 py-3 text-left text-sm transition duration-100 ${
+                className={`flex w-full items-center justify-between gap-4 rounded-md px-3 py-3 text-left text-sm transition-colors duration-100 ${
                   index === activeIndex ? "bg-raised text-text" : "text-muted hover:bg-raised hover:text-text"
                 }`}
                 onMouseEnter={() => setActiveIndex(index)}

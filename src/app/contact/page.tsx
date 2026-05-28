@@ -24,7 +24,7 @@ export default function ContactPage() {
         </h2>
         <div className="flex flex-wrap gap-2">
           <a
-            className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent/50 hover:bg-raised"
+            className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"
             href={`mailto:${profile.email}`}
           >
             <Mail aria-hidden="true" size={16} />
@@ -32,27 +32,27 @@ export default function ContactPage() {
           </a>
           <CopyEmailButton />
           <a
-            className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent/50 hover:bg-raised"
+            className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"
             href={profile.github}
           >
             <Github aria-hidden="true" size={16} />
             GitHub
           </a>
           <a
-            className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent/50 hover:bg-raised"
+            className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"
             href={profile.resumeUrl}
           >
             Resume
           </a>
           <a
-            className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent/50 hover:bg-raised"
+            className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"
             href={profile.portfolioSource}
           >
             <ExternalLink aria-hidden="true" size={16} />
             Portfolio source
           </a>
           <a
-            className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent/50 hover:bg-raised"
+            className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"
             href={profile.linkedin}
           >
             LinkedIn

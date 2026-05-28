@@ -18,7 +18,7 @@ function LinkButton({
   icon?: React.ReactNode;
 }) {
   const className =
-    "focus-ring inline-flex min-h-9 items-center gap-2 rounded-md border border-line px-3 py-1.5 text-sm text-text transition duration-150 hover:border-accent/50 hover:bg-raised";
+    "focus-ring inline-flex min-h-9 items-center gap-2 rounded-md border border-line px-3 py-1.5 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised";
 
   if (isExternalUrl(href)) {
     return (
@@ -41,7 +41,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const caseStudy = project.links?.caseStudy;
 
   return (
-    <article className="group flex h-full flex-col rounded-lg border border-line bg-panel p-4 transition duration-150 hover:border-accent/40">
+    <article className="group flex h-full flex-col rounded-lg border border-line bg-panel p-4 transition duration-150 hover:border-accent">
       <div className="flex flex-wrap gap-2">
         {project.categories.map((category) => (
           <Tag key={category}>{category}</Tag>

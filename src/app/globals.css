@@ -3,9 +3,53 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
   --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+:root,
+:root[data-mode="terminal"] {
+  color-scheme: dark;
+  --bg: #282828;
+  --panel: #32302F;
+  --panel-elevated: #3C3836;
+  --border: #504945;
+  --border-strong: #665C54;
+
+  --text: #EBDBB2;
+  --text-muted: #BDAE93;
+  --text-subtle: #928374;
+
+  --accent: #FABD2F;
+  --accent-orange: #FE8019;
+  --accent-green: #B8BB26;
+  --accent-red: #FB4934;
+  --accent-blue: #83A598;
+  --accent-purple: #D3869B;
+  --focus-ring: rgba(250, 189, 47, 0.26);
+  --scrim: rgba(40, 40, 40, 0.72);
+}
+
+:root[data-mode="docs"] {
+  color-scheme: light;
+  --bg: #FBF1C7;
+  --panel: #F2E5BC;
+  --panel-elevated: #EBDBB2;
+  --border: #D5C4A1;
+  --border-strong: #BDAE93;
+
+  --text: #3C3836;
+  --text-muted: #665C54;
+  --text-subtle: #7C6F64;
+
+  --accent: #AF3A03;
+  --accent-orange: #B57614;
+  --accent-green: #79740E;
+  --accent-red: #9D0006;
+  --accent-blue: #076678;
+  --accent-purple: #8F3F71;
+  --focus-ring: rgba(175, 58, 3, 0.22);
+  --scrim: rgba(60, 56, 54, 0.38);
 }
 
 * {
@@ -20,10 +64,11 @@ html {
 body {
   min-height: 100vh;
   margin: 0;
-  background: #090a0c;
-  color: #e8edf2;
+  background: var(--bg);
+  color: var(--text);
   font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
+  transition: background-color 150ms ease, color 150ms ease;
 }
 
 a {
@@ -37,11 +82,11 @@ input {
 }
 
 ::selection {
-  background: rgba(125, 211, 252, 0.24);
+  background: var(--focus-ring);
 }
 
 :focus-visible {
-  outline: 2px solid #7dd3fc;
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
