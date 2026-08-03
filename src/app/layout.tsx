@@ -17,9 +17,7 @@ const displayModeScript = `
     const storedMode = window.localStorage.getItem("display-mode");
     const mode = storedMode === "terminal" || storedMode === "docs"
       ? storedMode
-      : window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "terminal"
-        : "docs";
+      : "terminal";
 
     document.documentElement.dataset.mode = mode;
   } catch {

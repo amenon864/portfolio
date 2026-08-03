@@ -1,8 +1,10 @@
+export type ProjectStatus = "Active" | "Complete" | "In progress" | "Concept";
+
 export type Project = {
   slug: string;
   title: string;
   subtitle: string;
-  status: "Active" | "Complete" | "In progress" | "Concept";
+  status: ProjectStatus;
   categories: string[];
   stack: string[];
   summary: string;
@@ -50,3 +52,9 @@ export const projects: Project[] = [
     },
   },
 ];
+
+const currentProjectStatuses: ProjectStatus[] = ["Active", "In progress"];
+
+export const currentProjects = projects.filter((project) =>
+  currentProjectStatuses.includes(project.status),
+);

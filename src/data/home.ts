@@ -8,10 +8,7 @@ export const homeContent = {
     heading: "Currently",
     items: [] as string[],
   },
-  selectedWork: {
-    eyebrow: "Selected work",
-    heading: "Selected project notes",
-    projectSlugs: ["securepaste", "portfolio"],
+  currentWork: {
+    heading: "Current work",
   },
 };
-

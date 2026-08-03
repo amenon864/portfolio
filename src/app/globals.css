@@ -5,6 +5,7 @@
 :root {
   --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --font-serif: Charter, "Bitstream Charter", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
 }
 
 :root,
@@ -32,24 +33,24 @@
 
 :root[data-mode="docs"] {
   color-scheme: light;
-  --bg: #FBF1C7;
-  --panel: #F2E5BC;
-  --panel-elevated: #EBDBB2;
-  --border: #D5C4A1;
-  --border-strong: #BDAE93;
+  --bg: #E8E8E5;
+  --panel: #FAFAF8;
+  --panel-elevated: #EFEFED;
+  --border: #CECECA;
+  --border-strong: #A9A9A4;
 
-  --text: #3C3836;
-  --text-muted: #665C54;
-  --text-subtle: #7C6F64;
+  --text: #1B1B1A;
+  --text-muted: #555552;
+  --text-subtle: #767672;
 
-  --accent: #AF3A03;
-  --accent-orange: #B57614;
-  --accent-green: #79740E;
-  --accent-red: #9D0006;
-  --accent-blue: #076678;
-  --accent-purple: #8F3F71;
-  --focus-ring: rgba(175, 58, 3, 0.22);
-  --scrim: rgba(60, 56, 54, 0.38);
+  --accent: #8A2929;
+  --accent-orange: #8A4B20;
+  --accent-green: #3D643F;
+  --accent-red: #9B2727;
+  --accent-blue: #315F78;
+  --accent-purple: #69466F;
+  --focus-ring: rgba(49, 95, 120, 0.2);
+  --scrim: rgba(27, 27, 26, 0.38);
 }
 
 * {
@@ -69,6 +70,48 @@ body {
   font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
   transition: background-color 150ms ease, color 150ms ease;
+}
+
+:root[data-mode="terminal"] .site-main h1,
+:root[data-mode="terminal"] .site-main h2,
+:root[data-mode="terminal"] .site-main h3 {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+:root[data-mode="docs"] .site-main {
+  min-height: 100vh;
+  border-inline: 1px solid var(--border);
+  background: var(--panel);
+  font-family: var(--font-serif);
+}
+
+:root[data-mode="docs"] .site-main h1,
+:root[data-mode="docs"] .site-main h2,
+:root[data-mode="docs"] .site-main h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+}
+
+:root[data-mode="docs"] .section-header {
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+:root[data-mode="docs"] .section-header h1 {
+  line-height: 1.15;
+}
+
+:root[data-mode="docs"] .site-main p,
+:root[data-mode="docs"] .site-main li {
+  line-height: 1.75;
+}
+
+:root[data-mode="docs"] .site-sidebar,
+:root[data-mode="docs"] .site-context,
+:root[data-mode="docs"] .site-top-nav,
+:root[data-mode="docs"] .site-main button {
+  font-family: var(--font-sans);
 }
 
 a {

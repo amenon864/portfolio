@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Tag } from "@/components/Tag";
 import { activityContent } from "@/data/activity";
+import { currentProjects, projectContent } from "@/data/projects";
 
 export const metadata: Metadata = {
   title: activityContent.metadataTitle,
@@ -11,6 +12,10 @@ export const metadata: Metadata = {
 const populatedCourseGroups = activityContent.education.courseGroups.filter(
   (group) => group.courses.length > 0,
 );
+const chronologicalEntries = [...activityContent.timeline.entries].sort((first, second) =>
+  second.sortDate.localeCompare(first.sortDate),
+);
+const hasChronology = currentProjects.length > 0 || chronologicalEntries.length > 0;
 
 export default function ActivityPage() {
   return (
@@ -58,6 +63,19 @@ export default function ActivityPage() {
           </dl>
         ) : null}
 
+        {activityContent.education.interests.items.length > 0 ? (
+          <section aria-labelledby="education-interests-title" className="space-y-3">
+            <h3 id="education-interests-title" className="text-sm font-semibold text-text">
+              {activityContent.education.interests.heading}
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {activityContent.education.interests.items.map((interest) => (
+                <Tag key={interest}>{interest}</Tag>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
         {populatedCourseGroups.length > 0 ? (
           <div className="grid gap-5 sm:grid-cols-2">
             {populatedCourseGroups.map((group, index) => (
@@ -86,15 +104,71 @@ export default function ActivityPage() {
             ))}
           </div>
         ) : null}
+
+        {activityContent.education.recognition.items.length > 0 ? (
+          <section aria-labelledby="education-recognition-title" className="space-y-3">
+            <h3 id="education-recognition-title" className="text-sm font-semibold text-text">
+              {activityContent.education.recognition.heading}
+            </h3>
+            <ul className="space-y-2">
+              {activityContent.education.recognition.items.map((item) => (
+                <li
+                  key={`${item.date}-${item.title}`}
+                  className="grid gap-1 text-sm sm:grid-cols-[120px_minmax(0,1fr)]"
+                >
+                  <span className="font-mono text-xs text-accent">{item.date}</span>
+                  <span className="text-muted">
+                    <strong className="font-medium text-text">{item.title}</strong>
+                    {item.detail ? ` - ${item.detail}` : null}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
       </section>
 
-      {activityContent.timeline.entries.length > 0 ? (
+      {hasChronology ? (
         <section aria-labelledby="timeline-title" className="space-y-5">
           <h2 id="timeline-title" className="text-xl font-semibold text-text">
             {activityContent.timeline.heading}
           </h2>
           <div className="divide-y divide-line border-y border-line">
-            {activityContent.timeline.entries.map((entry) => (
+            {currentProjects.map((project) => (
+              <article
+                key={project.slug}
+                className="grid gap-4 py-5 sm:grid-cols-[150px_minmax(0,1fr)]"
+              >
+                <div>
+                  <p className="font-mono text-xs text-accent">
+                    {activityContent.timeline.currentPeriodLabel}
+                  </p>
+                  <p className="mt-2 font-mono text-[11px] uppercase text-subtle">
+                    {activityContent.timeline.currentTypeLabel}
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-text">{project.title}</h3>
+                  <p className="mt-1 text-sm text-muted">{project.subtitle}</p>
+                  <p className="mt-3 text-sm leading-7 text-muted">{project.summary}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {project.stack.map((technology) => (
+                      <Tag key={technology}>{technology}</Tag>
+                    ))}
+                  </div>
+                  {project.links?.github ? (
+                    <a
+                      className="focus-ring mt-4 inline-flex items-center gap-1 rounded-sm text-sm text-muted hover:text-text"
+                      href={project.links.github}
+                    >
+                      <Github aria-hidden="true" size={14} />
+                      {projectContent.linkLabels.github}
+                    </a>
+                  ) : null}
+                </div>
+              </article>
+            ))}
+            {chronologicalEntries.map((entry) => (
               <article
                 key={`${entry.period}-${entry.title}`}
                 className="grid gap-4 py-5 sm:grid-cols-[150px_minmax(0,1fr)]"
@@ -138,25 +212,6 @@ export default function ActivityPage() {
               </article>
             ))}
           </div>
-        </section>
-      ) : null}
-
-      {activityContent.recognition.items.length > 0 ? (
-        <section aria-labelledby="recognition-title" className="space-y-4">
-          <h2 id="recognition-title" className="text-xl font-semibold text-text">
-            {activityContent.recognition.heading}
-          </h2>
-          <ul className="space-y-3">
-            {activityContent.recognition.items.map((item) => (
-              <li key={`${item.date}-${item.title}`} className="grid gap-2 sm:grid-cols-[120px_minmax(0,1fr)]">
-                <span className="font-mono text-xs text-accent">{item.date}</span>
-                <span className="text-sm text-muted">
-                  <strong className="font-medium text-text">{item.title}</strong>
-                  {item.detail ? ` - ${item.detail}` : null}
-                </span>
-              </li>
-            ))}
-          </ul>
         </section>
       ) : null}
     </div>

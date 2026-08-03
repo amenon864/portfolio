@@ -25,7 +25,7 @@ export function ContextPanel() {
   const label = currentPageLabel(pathname ?? routes.home);
 
   return (
-    <aside className="hidden border-l border-line px-5 py-10 xl:block">
+    <aside className="site-context hidden border-l border-line px-5 py-10 xl:block">
       <div className="sticky top-10 space-y-8">
         <section aria-labelledby="focus-title">
           <h2 id="focus-title" className="text-xs font-semibold uppercase text-muted">

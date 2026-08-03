@@ -20,6 +20,7 @@ export type ActivityLink = {
 };
 
 export type ActivityEntry = {
+  sortDate: string;
   period: string;
   type: string;
   title: string;
@@ -47,18 +48,23 @@ export const activityContent = {
     period: "",
     description: [] as string[],
     facts: [] as EducationFact[],
+    interests: {
+      heading: "Mathematical interests",
+      items: [] as string[],
+    },
     courseGroups: [
       { heading: "Courses that shaped my interests", courses: [] },
       { heading: "Courses I want to take", courses: [] },
     ] as CourseGroup[],
+    recognition: {
+      heading: "Recognition",
+      items: [] as RecognitionItem[],
+    },
   },
   timeline: {
-    heading: "Chronological activity",
+    heading: "Chronology",
+    currentPeriodLabel: "Present",
+    currentTypeLabel: "Current work",
     entries: [] as ActivityEntry[],
   },
-  recognition: {
-    heading: "Recognition",
-    items: [] as RecognitionItem[],
-  },
 };
-

@@ -13,7 +13,7 @@ export function Sidebar() {
   const pathname = useMountedPathname();
 
   return (
-    <aside className="sticky top-0 hidden h-screen border-r border-line px-5 py-7 lg:block">
+    <aside className="site-sidebar sticky top-0 hidden h-screen border-r border-line px-5 py-7 lg:block">
       <div className="flex h-full flex-col">
         <Link href={routes.home} className="focus-ring rounded-sm">
           <p className="text-base font-semibold text-text">{profile.initials}.</p>

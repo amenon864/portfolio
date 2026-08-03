@@ -69,7 +69,7 @@ export const navigationContent = {
       hint: "Appearance",
     },
     docs: {
-      label: "Use document display",
+      label: "Use paper display",
       hint: "Appearance",
     },
   },

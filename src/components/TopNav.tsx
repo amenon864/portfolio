@@ -13,7 +13,7 @@ export function TopNav() {
   const pathname = useMountedPathname();
 
   return (
-    <header className="sticky top-0 z-30 border-b border-line bg-canvas px-4 py-3 lg:hidden">
+    <header className="site-top-nav sticky top-0 z-30 border-b border-line bg-canvas px-4 py-3 lg:hidden">
       <div className="mx-auto flex max-w-[1500px] flex-wrap items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-3">
           <Link href={routes.home} className="focus-ring min-w-0 rounded-sm">
