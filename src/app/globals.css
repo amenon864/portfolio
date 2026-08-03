@@ -116,6 +116,24 @@ body {
   line-height: 1.75;
 }
 
+:root[data-mode="docs"] .site-main .text-xs:not(.font-mono) {
+  font-size: 0.8rem;
+}
+
+:root[data-mode="docs"] .site-main .text-sm:not(.font-mono) {
+  font-size: 0.9375rem;
+}
+
+:root[data-mode="docs"] .site-main .text-base:not(.font-mono) {
+  font-size: 1.0625rem;
+}
+
+@media (min-width: 640px) {
+  :root[data-mode="docs"] .site-main .sm\:text-base:not(.font-mono) {
+    font-size: 1.0625rem;
+  }
+}
+
 :root[data-mode="docs"] .site-sidebar,
 :root[data-mode="docs"] .site-context,
 :root[data-mode="docs"] .site-top-nav,
