@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Clipboard, Check } from "lucide-react";
+import { linksContent } from "@/data/links";
 import { profile } from "@/data/profile";
 
 export function CopyEmailButton() {
@@ -20,7 +21,7 @@ export function CopyEmailButton() {
       onClick={copyEmail}
     >
       {copied ? <Check aria-hidden="true" size={16} /> : <Clipboard aria-hidden="true" size={16} />}
-      {copied ? "Copied" : "Copy email"}
+      {copied ? linksContent.labels.copiedEmail : linksContent.labels.copyEmail}
     </button>
   );
 }

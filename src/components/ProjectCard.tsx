@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ExternalLink, Github } from "lucide-react";
 import { Tag } from "@/components/Tag";
-import type { Project } from "@/data/projects";
+import { projectContent, type Project } from "@/data/projects";
 import { isExternalUrl } from "@/lib/utils";
 
 type ProjectCardProps = {
@@ -63,15 +63,17 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <div className="mt-auto flex flex-wrap gap-2 pt-5">
         {project.links?.github ? (
           <LinkButton href={project.links.github} icon={<Github aria-hidden="true" size={15} />}>
-            GitHub
+            {projectContent.linkLabels.github}
           </LinkButton>
         ) : null}
         {project.links?.live ? (
           <LinkButton href={project.links.live} icon={<ExternalLink aria-hidden="true" size={15} />}>
-            Live Demo
+            {projectContent.linkLabels.live}
           </LinkButton>
         ) : null}
-        {caseStudy ? <LinkButton href={caseStudy}>Case Study</LinkButton> : null}
+        {caseStudy ? (
+          <LinkButton href={caseStudy}>{projectContent.linkLabels.caseStudy}</LinkButton>
+        ) : null}
       </div>
     </article>
   );

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { primaryNavigation } from "@/data/navigation";
 
 function isTypingTarget(target: EventTarget | null) {
   if (!(target instanceof HTMLElement)) return false;
@@ -17,8 +18,8 @@ export function KeyboardShortcuts() {
       if (isTypingTarget(event.target) || event.metaKey || event.ctrlKey || event.altKey) return;
 
       const key = event.key.toLowerCase();
-      if (key === "h") router.push("/");
-      if (key === "r") router.push("/resume");
+      const destination = primaryNavigation.find((item) => item.shortcut === key);
+      if (destination) router.push(destination.href);
     }
 
     window.addEventListener("keydown", onKeyDown);

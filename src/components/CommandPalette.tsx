@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ExternalLink, Github, Mail, Search } from "lucide-react";
+import { navigationIcons } from "@/components/navigationIcons";
+import { navigationContent, primaryNavigation } from "@/data/navigation";
 import { profile } from "@/data/profile";
 import { setDisplayMode } from "@/lib/displayMode";
 
@@ -27,31 +29,50 @@ export function CommandPalette() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const commands = useMemo<CommandItem[]>(
-    () => [
-      { label: "Go to Home", hint: "Navigation", action: () => router.push("/") },
-      { label: "Go to Background", hint: "Navigation", action: () => router.push("/resume") },
-      { label: "Go to Links", hint: "Navigation", action: () => router.push("/contact") },
-      { label: "Switch to Terminal mode", hint: "Display", action: () => setDisplayMode("terminal") },
-      { label: "Switch to Docs mode", hint: "Display", action: () => setDisplayMode("docs") },
-      {
-        label: "Copy email",
-        hint: profile.email,
-        icon: <Mail aria-hidden="true" size={16} />,
-        action: () => navigator.clipboard.writeText(profile.email),
-      },
-      {
-        label: "Open GitHub",
-        hint: "External",
-        icon: <Github aria-hidden="true" size={16} />,
-        action: () => window.location.assign(profile.github),
-      },
-      {
-        label: "Open portfolio source",
-        hint: "External",
-        icon: <ExternalLink aria-hidden="true" size={16} />,
-        action: () => window.location.assign(profile.portfolioSource),
-      },
-    ],
+    () => {
+      const navigationCommands = primaryNavigation.map((item) => {
+        const Icon = navigationIcons[item.icon];
+
+        return {
+          label: item.commandLabel,
+          hint: item.commandHint,
+          icon: <Icon aria-hidden="true" size={16} />,
+          action: () => router.push(item.href),
+        };
+      });
+
+      return [
+        ...navigationCommands,
+        {
+          label: navigationContent.displayCommands.terminal.label,
+          hint: navigationContent.displayCommands.terminal.hint,
+          action: () => setDisplayMode("terminal"),
+        },
+        {
+          label: navigationContent.displayCommands.docs.label,
+          hint: navigationContent.displayCommands.docs.hint,
+          action: () => setDisplayMode("docs"),
+        },
+        {
+          label: navigationContent.copyEmailCommandLabel,
+          hint: profile.email,
+          icon: <Mail aria-hidden="true" size={16} />,
+          action: () => navigator.clipboard.writeText(profile.email),
+        },
+        {
+          label: navigationContent.openGitHubCommandLabel,
+          hint: navigationContent.externalCommandHint,
+          icon: <Github aria-hidden="true" size={16} />,
+          action: () => window.location.assign(profile.github),
+        },
+        {
+          label: navigationContent.openSourceCommandLabel,
+          hint: navigationContent.externalCommandHint,
+          icon: <ExternalLink aria-hidden="true" size={16} />,
+          action: () => window.location.assign(profile.portfolioSource),
+        },
+      ];
+    },
     [router],
   );
 
@@ -141,13 +162,13 @@ export function CommandPalette() {
         <div className="flex items-center gap-3 border-b border-line px-4 py-3">
           <Search aria-hidden="true" size={17} className="text-muted" />
           <label id="command-title" className="sr-only" htmlFor="command-input">
-            Command palette
+            {navigationContent.paletteTitle}
           </label>
           <input
             ref={inputRef}
             id="command-input"
             className="h-10 min-w-0 flex-1 bg-transparent text-sm text-text outline-none placeholder:text-muted"
-            placeholder="Search commands"
+            placeholder={navigationContent.palettePlaceholder}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             onKeyDown={onInputKeyDown}
@@ -173,7 +194,9 @@ export function CommandPalette() {
               </button>
             ))
           ) : (
-            <p className="px-3 py-6 text-sm text-muted">No commands found.</p>
+            <p className="px-3 py-6 text-sm text-muted">
+              {navigationContent.paletteEmptyMessage}
+            </p>
           )}
         </div>
       </div>

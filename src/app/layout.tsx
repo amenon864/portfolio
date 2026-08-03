@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SiteShell } from "@/components/SiteShell";
-import { profile } from "@/data/profile";
+import { siteContent } from "@/data/site";
 
 export const metadata: Metadata = {
   title: {
-    default: `${profile.name} | Portfolio`,
-    template: `%s | ${profile.name}`,
+    default: siteContent.metadata.defaultTitle,
+    template: siteContent.metadata.titleTemplate,
   },
-  description:
-    "Aditya Menon's personal website and portfolio",
+  description: siteContent.metadata.description,
 };
 
 const displayModeScript = `
