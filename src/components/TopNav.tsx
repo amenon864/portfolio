@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Command, FileText, FolderKanban, Home, Mail } from "lucide-react";
+import { Command, FileText, Home, Mail } from "lucide-react";
 import { ModeToggle } from "@/components/ModeToggle";
 import { profile } from "@/data/profile";
 import { cn } from "@/lib/utils";
@@ -9,7 +9,6 @@ import { useMountedPathname } from "@/lib/useMountedPathname";
 
 const navItems = [
   { href: "/", label: "Home", icon: Home },
-  { href: "/projects", label: "Projects", icon: FolderKanban },
   { href: "/resume", label: "Background", icon: FileText },
   { href: "/contact", label: "Links", icon: Mail },
 ];

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Download, ExternalLink } from "lucide-react";
+import { Download } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Tag } from "@/components/Tag";
 import { profile } from "@/data/profile";
@@ -42,13 +41,6 @@ export default function ResumePage() {
           <Download aria-hidden="true" size={16} />
           PDF version
         </a>
-        <Link
-          className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"
-          href="/projects"
-        >
-          <ExternalLink aria-hidden="true" size={16} />
-          Projects
-        </Link>
       </div>
 
       <section aria-labelledby="experience-title" className="space-y-3">

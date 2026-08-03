@@ -1,13 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { profile } from "@/data/profile";
 import { useMountedPathname } from "@/lib/useMountedPathname";
 import { Tag } from "@/components/Tag";
 
 function currentFocus(pathname: string) {
-  if (pathname.startsWith("/projects")) return "Project archive";
   if (pathname.startsWith("/resume")) return "Background";
   if (pathname.startsWith("/contact")) return "Links";
   return "Workspace";
@@ -31,9 +29,6 @@ export function ContextPanel() {
             Quick links
           </h2>
           <div className="mt-3 space-y-2 text-sm">
-            <Link className="focus-ring block rounded-sm text-muted hover:text-text" href="/projects">
-              All projects
-            </Link>
             <a
               className="focus-ring inline-flex items-center gap-1 rounded-sm text-muted hover:text-text"
               href={profile.github}

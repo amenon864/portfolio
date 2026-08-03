@@ -18,7 +18,6 @@ export function KeyboardShortcuts() {
 
       const key = event.key.toLowerCase();
       if (key === "h") router.push("/");
-      if (key === "p") router.push("/projects");
       if (key === "r") router.push("/resume");
     }
 

@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Tag } from "@/components/Tag";
@@ -42,20 +40,11 @@ export default function HomePage() {
       </section>
 
       <section aria-labelledby="selected-projects-title" className="space-y-5">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="font-mono text-xs uppercase text-accent">Selected work</p>
-            <h2 id="selected-projects-title" className="mt-2 text-2xl font-semibold text-text">
-              Selected project notes
-            </h2>
-          </div>
-          <Link
-            href="/projects"
-            className="focus-ring inline-flex w-fit items-center gap-2 rounded-md border border-line px-3 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"
-          >
-            View all projects
-            <ArrowRight aria-hidden="true" size={15} />
-          </Link>
+        <div>
+          <p className="font-mono text-xs uppercase text-accent">Selected work</p>
+          <h2 id="selected-projects-title" className="mt-2 text-2xl font-semibold text-text">
+            Selected project notes
+          </h2>
         </div>
         <ProjectGrid projects={selectedProjects} />
       </section>

@@ -29,7 +29,6 @@ export function CommandPalette() {
   const commands = useMemo<CommandItem[]>(
     () => [
       { label: "Go to Home", hint: "Navigation", action: () => router.push("/") },
-      { label: "Go to Projects", hint: "Navigation", action: () => router.push("/projects") },
       { label: "Go to Background", hint: "Navigation", action: () => router.push("/resume") },
       { label: "Go to Links", hint: "Navigation", action: () => router.push("/contact") },
       { label: "Switch to Terminal mode", hint: "Display", action: () => setDisplayMode("terminal") },
@@ -148,7 +147,7 @@ export function CommandPalette() {
             ref={inputRef}
             id="command-input"
             className="h-10 min-w-0 flex-1 bg-transparent text-sm text-text outline-none placeholder:text-muted"
-            placeholder="Search commands or projects"
+            placeholder="Search commands"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             onKeyDown={onInputKeyDown}
