@@ -1,4 +1,8 @@
 import type { Metadata } from "next";
+import "@fontsource-variable/fira-code/wght.css";
+import "@fontsource/libertinus-serif/latin-400.css";
+import "@fontsource/libertinus-serif/latin-400-italic.css";
+import "@fontsource/libertinus-serif/latin-600.css";
 import "./globals.css";
 import { SiteShell } from "@/components/SiteShell";
 import { siteContent } from "@/data/site";

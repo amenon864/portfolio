@@ -4,8 +4,8 @@
 
 :root {
   --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  --font-serif: Charter, "Bitstream Charter", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-mono: "Fira Code Variable", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --font-serif: "Libertinus Serif", Charter, "Bitstream Charter", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
 }
 
 :root,
@@ -72,11 +72,20 @@ body {
   transition: background-color 150ms ease, color 150ms ease;
 }
 
+:root[data-mode="terminal"] .site-main {
+  font-family: var(--font-mono);
+  font-variant-ligatures: contextual;
+}
+
 :root[data-mode="terminal"] .site-main h1,
 :root[data-mode="terminal"] .site-main h2,
 :root[data-mode="terminal"] .site-main h3 {
-  font-family: var(--font-mono);
   font-weight: 600;
+}
+
+:root[data-mode="terminal"] .site-main p,
+:root[data-mode="terminal"] .site-main li {
+  line-height: 1.75;
 }
 
 :root[data-mode="docs"] .site-main {
@@ -110,7 +119,8 @@ body {
 :root[data-mode="docs"] .site-sidebar,
 :root[data-mode="docs"] .site-context,
 :root[data-mode="docs"] .site-top-nav,
-:root[data-mode="docs"] .site-main button {
+:root[data-mode="docs"] .site-main button,
+:root[data-mode="terminal"] .site-main button {
   font-family: var(--font-sans);
 }
 
