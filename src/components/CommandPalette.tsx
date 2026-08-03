@@ -6,13 +6,15 @@ import { ExternalLink, Github, Mail, Search } from "lucide-react";
 import { navigationIcons } from "@/components/navigationIcons";
 import { navigationContent, primaryNavigation } from "@/data/navigation";
 import { profile } from "@/data/profile";
+import { copyText } from "@/lib/clipboard";
 import { setDisplayMode } from "@/lib/displayMode";
 
 type CommandItem = {
   label: string;
   hint: string;
-  action: () => void;
+  action: () => void | Promise<void>;
   icon?: React.ReactNode;
+  keepOpen?: boolean;
 };
 
 export function CommandPalette() {
@@ -22,6 +24,7 @@ export function CommandPalette() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
+  const [statusMessage, setStatusMessage] = useState("");
 
   const commands = useMemo<CommandItem[]>(
     () => {
@@ -52,7 +55,15 @@ export function CommandPalette() {
           label: navigationContent.copyEmailCommandLabel,
           hint: profile.email,
           icon: <Mail aria-hidden="true" size={16} />,
-          action: () => navigator.clipboard.writeText(profile.email),
+          keepOpen: true,
+          action: async () => {
+            const copied = await copyText(profile.email);
+            setStatusMessage(
+              copied
+                ? navigationContent.copiedEmailMessage
+                : navigationContent.copyEmailErrorMessage,
+            );
+          },
         },
         {
           label: navigationContent.openGitHubCommandLabel,
@@ -109,6 +120,7 @@ export function CommandPalette() {
     document.body.style.overflow = "hidden";
     setQuery("");
     setActiveIndex(0);
+    setStatusMessage("");
     window.setTimeout(() => inputRef.current?.focus(), 0);
 
     return () => {
@@ -123,15 +135,17 @@ export function CommandPalette() {
 
   if (!open) return null;
 
-  function runCommand(command: CommandItem) {
-    command.action();
-    setOpen(false);
+  async function runCommand(command: CommandItem) {
+    await command.action();
+    if (!command.keepOpen) setOpen(false);
   }
 
   function onInputKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === "ArrowDown") {
       event.preventDefault();
-      setActiveIndex((index) => Math.min(index + 1, filteredCommands.length - 1));
+      if (filteredCommands.length > 0) {
+        setActiveIndex((index) => Math.min(index + 1, filteredCommands.length - 1));
+      }
     }
     if (event.key === "ArrowUp") {
       event.preventDefault();
@@ -139,7 +153,7 @@ export function CommandPalette() {
     }
     if (event.key === "Enter" && filteredCommands[activeIndex]) {
       event.preventDefault();
-      runCommand(filteredCommands[activeIndex]);
+      void runCommand(filteredCommands[activeIndex]);
     }
   }
 
@@ -154,7 +168,7 @@ export function CommandPalette() {
 
     const focusableElements = Array.from(
       panelRef.current.querySelectorAll<HTMLElement>(
-        'button:not([disabled]), input:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
+        'button:not([disabled]):not([tabindex="-1"]), input:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
       ),
     );
     const firstElement = focusableElements[0];
@@ -194,22 +208,38 @@ export function CommandPalette() {
             id="command-input"
             className="h-10 min-w-0 flex-1 bg-transparent text-sm text-text outline-none placeholder:text-muted"
             placeholder={navigationContent.palettePlaceholder}
+            role="combobox"
+            aria-autocomplete="list"
+            aria-controls="command-listbox"
+            aria-expanded="true"
+            aria-activedescendant={
+              filteredCommands[activeIndex] ? `command-option-${activeIndex}` : undefined
+            }
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             onKeyDown={onInputKeyDown}
           />
         </div>
-        <div className="max-h-[60vh] overflow-y-auto p-2">
+        <div
+          id="command-listbox"
+          className="max-h-[60vh] overflow-y-auto p-2"
+          role="listbox"
+          aria-label={navigationContent.paletteTitle}
+        >
           {filteredCommands.length > 0 ? (
             filteredCommands.map((command, index) => (
               <button
                 key={`${command.label}-${command.hint}`}
+                id={`command-option-${index}`}
                 type="button"
+                role="option"
+                aria-selected={index === activeIndex}
+                tabIndex={-1}
                 className={`flex w-full items-center justify-between gap-4 rounded-md px-3 py-3 text-left text-sm transition-colors duration-100 ${
                   index === activeIndex ? "bg-raised text-text" : "text-muted hover:bg-raised hover:text-text"
                 }`}
                 onMouseEnter={() => setActiveIndex(index)}
-                onClick={() => runCommand(command)}
+                onClick={() => void runCommand(command)}
               >
                 <span className="flex min-w-0 items-center gap-3">
                   {command.icon ? <span className="text-accent">{command.icon}</span> : null}
@@ -224,6 +254,9 @@ export function CommandPalette() {
             </p>
           )}
         </div>
+        <p className="sr-only" role="status" aria-live="polite">
+          {statusMessage}
+        </p>
       </div>
     </div>
   );

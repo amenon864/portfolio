@@ -30,8 +30,9 @@ const structuredData = {
     item: {
       "@type": "LearningResource",
       name: `${note.courseCode}: ${note.courseName}`,
+      identifier: note.courseCode,
+      about: note.courseName,
       learningResourceType: notesContent.learningResourceType,
-      educationalLevel: note.courseCode,
       temporalCoverage: note.term,
       encodingFormat: "application/pdf",
       provider: {

@@ -14,5 +14,6 @@ export const linksContent = {
     linkedin: "LinkedIn",
     copyEmail: "Copy email",
     copiedEmail: "Copied",
+    copyEmailError: "Copy failed",
   },
 };

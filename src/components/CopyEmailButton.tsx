@@ -1,18 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { Clipboard, Check } from "lucide-react";
+import { CircleAlert, Clipboard, Check } from "lucide-react";
 import { linksContent } from "@/data/links";
 import { profile } from "@/data/profile";
+import { copyText } from "@/lib/clipboard";
+
+type CopyState = "idle" | "copied" | "error";
 
 export function CopyEmailButton() {
-  const [copied, setCopied] = useState(false);
+  const [copyState, setCopyState] = useState<CopyState>("idle");
 
   async function copyEmail() {
-    await navigator.clipboard.writeText(profile.email);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1800);
+    const copied = await copyText(profile.email);
+    setCopyState(copied ? "copied" : "error");
+    window.setTimeout(() => setCopyState("idle"), 1800);
   }
+
+  const label = copyState === "copied"
+    ? linksContent.labels.copiedEmail
+    : copyState === "error"
+      ? linksContent.labels.copyEmailError
+      : linksContent.labels.copyEmail;
 
   return (
     <button
@@ -20,10 +29,10 @@ export function CopyEmailButton() {
       className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"
       onClick={copyEmail}
     >
-      {copied ? <Check aria-hidden="true" size={16} /> : <Clipboard aria-hidden="true" size={16} />}
-      <span aria-live="polite">
-        {copied ? linksContent.labels.copiedEmail : linksContent.labels.copyEmail}
-      </span>
+      {copyState === "copied" ? <Check aria-hidden="true" size={16} /> : null}
+      {copyState === "error" ? <CircleAlert aria-hidden="true" size={16} /> : null}
+      {copyState === "idle" ? <Clipboard aria-hidden="true" size={16} /> : null}
+      <span aria-live="polite">{label}</span>
     </button>
   );
 }

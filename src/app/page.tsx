@@ -1,9 +1,7 @@
-import { ProjectGrid } from "@/components/ProjectGrid";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Tag } from "@/components/Tag";
 import { homeContent } from "@/data/home";
 import { profile } from "@/data/profile";
-import { currentProjects } from "@/data/projects";
 
 export default function HomePage() {
   return (
@@ -27,24 +25,20 @@ export default function HomePage() {
       </section>
 
       {homeContent.current.items.length > 0 ? (
-        <section aria-labelledby="currently-title" className="rounded-lg border border-line bg-panel p-4">
-          <h2 id="currently-title" className="text-sm font-semibold text-text">
+        <section aria-labelledby="currently-title" className="border-y border-line py-5">
+          <h2 id="currently-title" className="text-xl font-semibold text-text">
             {homeContent.current.heading}
           </h2>
-          <ul className="mt-3 grid gap-2 text-sm leading-6 text-muted md:grid-cols-3">
+          <ul className="mt-4 space-y-2 text-sm leading-6 text-muted">
             {homeContent.current.items.map((item) => (
-              <li key={item}>{item}</li>
+              <li key={item} className="grid grid-cols-[1rem_minmax(0,1fr)] gap-2">
+                <span aria-hidden="true" className="font-mono text-accent">
+                  &gt;
+                </span>
+                <span>{item}</span>
+              </li>
             ))}
           </ul>
-        </section>
-      ) : null}
-
-      {currentProjects.length > 0 ? (
-        <section aria-labelledby="current-work-title" className="space-y-5">
-          <h2 id="current-work-title" className="text-2xl font-semibold text-text">
-            {homeContent.currentWork.heading}
-          </h2>
-          <ProjectGrid projects={currentProjects} />
         </section>
       ) : null}
     </div>

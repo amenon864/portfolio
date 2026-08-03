@@ -1,7 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <title>Aditya Menon</title>
   <rect width="64" height="64" fill="#1b1b1a" />
-  <rect x="8" y="8" width="48" height="48" fill="#fafaf8" />
-  <path d="M18 20L30 32L18 44" fill="none" stroke="#1b1b1a" stroke-width="5" />
-  <path d="M34 44H47" fill="none" stroke="#1b1b1a" stroke-width="5" />
+  <path d="M19 12H11V52H19" fill="none" stroke="#fafaf8" stroke-width="5" />
+  <path d="M45 12H53V52H45" fill="none" stroke="#fafaf8" stroke-width="5" />
+  <path
+    d="M40 47V25H32C25.5 25 23 28.5 23 34C23 39.5 25.5 43 32 43C35.5 43 38 41 40 38"
+    fill="none"
+    stroke="#fafaf8"
+    stroke-linejoin="round"
+    stroke-width="5"
+  />
 </svg>

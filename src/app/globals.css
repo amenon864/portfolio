@@ -19,7 +19,7 @@
 
   --text: #EBDBB2;
   --text-muted: #BDAE93;
-  --text-subtle: #928374;
+  --text-subtle: #A89984;
 
   --accent: #FABD2F;
   --accent-orange: #FE8019;
@@ -41,7 +41,7 @@
 
   --text: #1B1B1A;
   --text-muted: #555552;
-  --text-subtle: #767672;
+  --text-subtle: #646460;
 
   --accent: #1B1B1A;
   --accent-orange: #343432;
@@ -69,7 +69,12 @@ body {
   color: var(--text);
   font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
-  transition: background-color 150ms ease, color 150ms ease;
+}
+
+:root.changing-mode *,
+:root.changing-mode *::before,
+:root.changing-mode *::after {
+  transition: none !important;
 }
 
 :root[data-mode="terminal"] .site-main {
@@ -168,5 +173,20 @@ input {
 
   .panel {
     @apply border border-line bg-panel;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

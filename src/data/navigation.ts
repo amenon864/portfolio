@@ -70,14 +70,12 @@ export const navigationContent = {
     },
   },
   copyEmailCommandLabel: "Copy email address",
+  copiedEmailMessage: "Email address copied.",
+  copyEmailErrorMessage: "Could not copy the email address.",
   openGitHubCommandLabel: "Open GitHub",
   openSourceCommandLabel: "Open site source",
   externalCommandHint: "External link",
   displayModeAriaLabel: "Switch display mode",
-  contextTitle: "Current page",
-  contextDefaultLabel: "Home",
-  quickLinksTitle: "Quick links",
-  interestsTitle: "Interests",
   footerAriaLabel: "Footer",
 };
 
@@ -89,13 +87,5 @@ export type FooterLink = {
 };
 
 export const footerLinks: FooterLink[] = [
-  { label: "Activity", href: routes.activity, kind: "internal" },
-  { label: "Notes", href: routes.notes, kind: "internal" },
-  { label: "Links", href: routes.links, kind: "internal" },
-  { label: "Resume PDF", href: profile.resumeUrl, kind: "document" },
   { label: "Source", href: profile.portfolioSource, kind: "external", icon: "github" },
-];
-
-export const externalQuickLinks = [
-  { label: "GitHub", href: profile.github },
 ];

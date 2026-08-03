@@ -1,5 +1,4 @@
 import { CommandPalette } from "@/components/CommandPalette";
-import { ContextPanel } from "@/components/ContextPanel";
 import { Footer } from "@/components/Footer";
 import { Sidebar } from "@/components/Sidebar";
 import { TopNav } from "@/components/TopNav";
@@ -16,7 +15,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       </a>
       <CommandPalette />
       <TopNav />
-      <div className="mx-auto grid w-full max-w-[1500px] grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)_280px]">
+      <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)]">
         <Sidebar />
         <main
           id="main-content"
@@ -26,7 +25,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           {children}
           <Footer />
         </main>
-        <ContextPanel />
       </div>
     </div>
   );
