@@ -2,13 +2,9 @@ export type CourseNote = {
   courseCode: string;
   courseName: string;
   institution: string;
+  term: string;
   fileName: string;
   href: string;
-};
-
-export type CourseNoteTerm = {
-  term: string;
-  entries: CourseNote[];
 };
 
 export const notesContent = {
@@ -20,18 +16,14 @@ export const notesContent = {
   ],
   availableNotesLabel: "Available notes",
   pdfLabel: "PDF",
-  terms: [
+  entries: [
     {
+      courseCode: "CS 245",
+      courseName: "Computability",
+      institution: "University of Waterloo",
       term: "Spring 2026",
-      entries: [
-        {
-          courseCode: "CS 245",
-          courseName: "Computability",
-          institution: "University of Waterloo",
-          fileName: "computability-cs245.pdf",
-          href: "/computability-cs245.pdf",
-        },
-      ],
+      fileName: "computability-cs245.pdf",
+      href: "/computability-cs245.pdf",
     },
-  ] as CourseNoteTerm[],
+  ] as CourseNote[],
 };
