@@ -12,7 +12,7 @@ export function Footer() {
             GitHub
           </a>
           <Link className="focus-ring rounded-sm hover:text-text" href="/resume">
-            Resume
+            Background
           </Link>
           <a
             className="focus-ring inline-flex items-center gap-1 rounded-sm hover:text-text"

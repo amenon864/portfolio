@@ -7,7 +7,7 @@ import { profile } from "@/data/profile";
 import { resume } from "@/data/resume";
 
 export const metadata: Metadata = {
-  title: "Resume",
+  title: "Background",
 };
 
 function SkillGroup({ title, items }: { title: string; items: string[] }) {
@@ -28,7 +28,7 @@ function SkillGroup({ title, items }: { title: string; items: string[] }) {
 export default function ResumePage() {
   return (
     <div className="max-w-4xl space-y-9">
-      <SectionHeader eyebrow="Resume" title="Technical summary">
+      <SectionHeader eyebrow="Background" title="Notes">
         <p>{resume.summary}</p>
       </SectionHeader>
 
@@ -40,20 +40,20 @@ export default function ResumePage() {
           rel="noreferrer"
         >
           <Download aria-hidden="true" size={16} />
-          Resume PDF
+          PDF version
         </a>
         <Link
           className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"
           href="/projects"
         >
           <ExternalLink aria-hidden="true" size={16} />
-          Project index
+          Projects
         </Link>
       </div>
 
       <section aria-labelledby="experience-title" className="space-y-3">
         <h2 id="experience-title" className="text-xl font-semibold text-text">
-          Experience highlights
+          Work notes
         </h2>
         <ul className="space-y-2 text-muted">
           {resume.experienceHighlights.map((highlight) => (
@@ -66,7 +66,7 @@ export default function ResumePage() {
 
       <section aria-labelledby="project-highlights-title" className="space-y-3">
         <h2 id="project-highlights-title" className="text-xl font-semibold text-text">
-          Project highlights
+          Project notes
         </h2>
         <div className="grid gap-3 sm:grid-cols-2">
           {resume.projectHighlights.map((item) => (
@@ -79,7 +79,7 @@ export default function ResumePage() {
 
       <section aria-labelledby="skills-title" className="space-y-5">
         <h2 id="skills-title" className="text-xl font-semibold text-text">
-          Skills
+          Tools and languages
         </h2>
         {resume.skills.map((skillGroup) => (
           <SkillGroup key={skillGroup.title} title={skillGroup.title} items={skillGroup.items} />

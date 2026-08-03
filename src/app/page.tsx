@@ -46,7 +46,7 @@ export default function HomePage() {
           <div>
             <p className="font-mono text-xs uppercase text-accent">Selected work</p>
             <h2 id="selected-projects-title" className="mt-2 text-2xl font-semibold text-text">
-              Projects with evidence
+              Selected project notes
             </h2>
           </div>
           <Link

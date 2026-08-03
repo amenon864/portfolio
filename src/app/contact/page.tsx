@@ -5,16 +5,15 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { profile } from "@/data/profile";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: "Links",
 };
 
 export default function ContactPage() {
   return (
     <div className="max-w-3xl space-y-8">
-      <SectionHeader eyebrow="Contact" title="Get in touch">
+      <SectionHeader eyebrow="Links" title="Say hello">
         <p>
-          Interested in software engineering, systems, algorithms, embedded
-          software, and research-oriented technical work.
+          A few places to find me, read code, or send a note.
         </p>
       </SectionHeader>
 
@@ -42,7 +41,7 @@ export default function ContactPage() {
             className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"
             href={profile.resumeUrl}
           >
-            Resume
+            PDF
           </a>
           <a
             className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"

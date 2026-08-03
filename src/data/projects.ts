@@ -37,7 +37,7 @@ export const projects: Project[] = [
   {
     slug: "portfolio",
     title: "Portfolio Site",
-    subtitle: "Fast technical workbench for my projects",
+    subtitle: "Personal project notebook",
     status: "In progress",
     categories: ["Web", "Frontend", "Design"],
     stack: ["Next.js", "TypeScript", "Tailwind CSS"],
@@ -45,7 +45,7 @@ export const projects: Project[] = [
       "This site! Currently empty, but I have plans for it.",
     highlights: [
       "Built with Next.js App Router, TypeScript, and Tailwind CSS",
-      "Designed around compact project cards and evidence-focused writing",
+      "Designed around compact project notes and keyboard navigation",
       "Includes optional command palette and keyboard navigation"
     ],
     links: {

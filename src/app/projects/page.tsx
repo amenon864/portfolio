@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <div className="space-y-8">
-      <SectionHeader eyebrow="Project index" title="Technical work">
+      <SectionHeader eyebrow="Project archive" title="Projects">
         <p>
-          Compact project cards focused on architecture, constraints, implementation
-          details, and proof of work.
+          A compact index of projects, experiments, and notes from things I have
+          been building.
         </p>
       </SectionHeader>
       <ProjectGrid projects={projects} />

@@ -30,8 +30,8 @@ export function CommandPalette() {
     () => [
       { label: "Go to Home", hint: "Navigation", action: () => router.push("/") },
       { label: "Go to Projects", hint: "Navigation", action: () => router.push("/projects") },
-      { label: "Go to Resume", hint: "Navigation", action: () => router.push("/resume") },
-      { label: "Go to Contact", hint: "Navigation", action: () => router.push("/contact") },
+      { label: "Go to Background", hint: "Navigation", action: () => router.push("/resume") },
+      { label: "Go to Links", hint: "Navigation", action: () => router.push("/contact") },
       { label: "Switch to Terminal mode", hint: "Display", action: () => setDisplayMode("terminal") },
       { label: "Switch to Docs mode", hint: "Display", action: () => setDisplayMode("docs") },
       {

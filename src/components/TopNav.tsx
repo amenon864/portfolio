@@ -10,8 +10,8 @@ import { useMountedPathname } from "@/lib/useMountedPathname";
 const navItems = [
   { href: "/", label: "Home", icon: Home },
   { href: "/projects", label: "Projects", icon: FolderKanban },
-  { href: "/resume", label: "Resume", icon: FileText },
-  { href: "/contact", label: "Contact", icon: Mail },
+  { href: "/resume", label: "Background", icon: FileText },
+  { href: "/contact", label: "Links", icon: Mail },
 ];
 
 export function TopNav() {

@@ -7,10 +7,10 @@ import { useMountedPathname } from "@/lib/useMountedPathname";
 import { Tag } from "@/components/Tag";
 
 function currentFocus(pathname: string) {
-  if (pathname.startsWith("/projects")) return "Project index";
-  if (pathname.startsWith("/resume")) return "Resume";
-  if (pathname.startsWith("/contact")) return "Contact";
-  return "Technical workbench";
+  if (pathname.startsWith("/projects")) return "Project archive";
+  if (pathname.startsWith("/resume")) return "Background";
+  if (pathname.startsWith("/contact")) return "Links";
+  return "Workspace";
 }
 
 export function ContextPanel() {
@@ -22,7 +22,7 @@ export function ContextPanel() {
       <div className="sticky top-10 space-y-8">
         <section aria-labelledby="focus-title">
           <h2 id="focus-title" className="text-xs font-semibold uppercase text-muted">
-            Current focus
+            Current page
           </h2>
           <p className="mt-3 text-sm leading-6 text-text">{focus}</p>
         </section>
