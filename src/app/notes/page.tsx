@@ -5,6 +5,13 @@ import { notesContent } from "@/data/notes";
 
 export const metadata: Metadata = {
   title: notesContent.metadataTitle,
+  description: notesContent.metadataDescription,
+  keywords: notesContent.entries.flatMap((note) => [
+    note.courseCode,
+    note.courseName,
+    `${note.courseCode} ${note.courseName}`,
+    `${note.courseCode} notes`,
+  ]),
 };
 
 const orderedNotes = [...notesContent.entries].sort((first, second) =>
@@ -14,9 +21,34 @@ const orderedNotes = [...notesContent.entries].sort((first, second) =>
   }),
 );
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  itemListElement: orderedNotes.map((note, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "LearningResource",
+      name: `${note.courseCode}: ${note.courseName}`,
+      learningResourceType: notesContent.learningResourceType,
+      educationalLevel: note.courseCode,
+      temporalCoverage: note.term,
+      encodingFormat: "application/pdf",
+      provider: {
+        "@type": "CollegeOrUniversity",
+        name: note.institution,
+      },
+    },
+  })),
+};
+
 export default function NotesPage() {
   return (
     <div className="max-w-4xl space-y-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
+      />
       <SectionHeader eyebrow={notesContent.eyebrow} title={notesContent.title}>
         {notesContent.introduction.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
@@ -43,8 +75,10 @@ export default function NotesPage() {
               <a
                 className="focus-ring inline-flex min-h-10 w-fit items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"
                 href={item.href}
+                type="application/pdf"
                 target="_blank"
                 rel="noreferrer"
+                aria-label={`${notesContent.pdfLabel}: ${item.courseCode} ${item.courseName}`}
               >
                 <Download aria-hidden="true" size={16} />
                 {notesContent.pdfLabel}

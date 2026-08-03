@@ -15,15 +15,10 @@ type CommandItem = {
   icon?: React.ReactNode;
 };
 
-function isTypingTarget(target: EventTarget | null) {
-  if (!(target instanceof HTMLElement)) return false;
-  const tag = target.tagName.toLowerCase();
-  return tag === "input" || tag === "textarea" || tag === "select" || target.isContentEditable;
-}
-
 export function CommandPalette() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
@@ -95,11 +90,7 @@ export function CommandPalette() {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
         setOpen((current) => !current);
-        return;
       }
-
-      if (!open || isTypingTarget(event.target)) return;
-      if (event.key === "Escape") setOpen(false);
     }
 
     window.addEventListener("open-command-palette", onOpenPalette);
@@ -108,13 +99,22 @@ export function CommandPalette() {
       window.removeEventListener("open-command-palette", onOpenPalette);
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [open]);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
+    const previouslyFocused = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
     setQuery("");
     setActiveIndex(0);
     window.setTimeout(() => inputRef.current?.focus(), 0);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      if (previouslyFocused instanceof HTMLElement) previouslyFocused.focus();
+    };
   }, [open]);
 
   useEffect(() => {
@@ -129,10 +129,6 @@ export function CommandPalette() {
   }
 
   function onInputKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.key === "Escape") {
-      event.preventDefault();
-      setOpen(false);
-    }
     if (event.key === "ArrowDown") {
       event.preventDefault();
       setActiveIndex((index) => Math.min(index + 1, filteredCommands.length - 1));
@@ -147,6 +143,33 @@ export function CommandPalette() {
     }
   }
 
+  function onDialogKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      setOpen(false);
+      return;
+    }
+
+    if (event.key !== "Tab" || !panelRef.current) return;
+
+    const focusableElements = Array.from(
+      panelRef.current.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), input:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
+      ),
+    );
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements.at(-1);
+
+    if (!firstElement || !lastElement) return;
+    if (event.shiftKey && document.activeElement === firstElement) {
+      event.preventDefault();
+      lastElement.focus();
+    } else if (!event.shiftKey && document.activeElement === lastElement) {
+      event.preventDefault();
+      firstElement.focus();
+    }
+  }
+
   return (
     <div
       className="fixed inset-0 z-50 bg-[var(--scrim)] px-4 py-20"
@@ -154,8 +177,10 @@ export function CommandPalette() {
       aria-modal="true"
       aria-labelledby="command-title"
       onMouseDown={() => setOpen(false)}
+      onKeyDown={onDialogKeyDown}
     >
       <div
+        ref={panelRef}
         className="mx-auto max-w-xl overflow-hidden rounded-lg border border-line bg-panel shadow-[0_18px_60px_var(--scrim)]"
         onMouseDown={(event) => event.stopPropagation()}
       >

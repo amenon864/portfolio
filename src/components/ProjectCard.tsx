@@ -48,7 +48,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         ))}
       </div>
       <div className="mt-4">
-        <h2 className="text-lg font-semibold text-text">{project.title}</h2>
+        <h3 className="text-lg font-semibold text-text">{project.title}</h3>
         <p className="mt-1 text-sm text-muted">{project.subtitle}</p>
       </div>
       <p className="mt-4 text-sm leading-6 text-muted">{project.summary}</p>

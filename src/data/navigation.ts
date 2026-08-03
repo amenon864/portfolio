@@ -14,7 +14,6 @@ export type NavigationItem = {
   label: string;
   commandLabel: string;
   commandHint: string;
-  shortcut: string;
   icon: NavigationIconKey;
 };
 
@@ -24,7 +23,6 @@ export const primaryNavigation: NavigationItem[] = [
     label: "Home",
     commandLabel: "Go to Home",
     commandHint: "Navigation",
-    shortcut: "h",
     icon: "home",
   },
   {
@@ -32,7 +30,6 @@ export const primaryNavigation: NavigationItem[] = [
     label: "Activity",
     commandLabel: "Go to Activity",
     commandHint: "Chronological activity",
-    shortcut: "a",
     icon: "activity",
   },
   {
@@ -40,7 +37,6 @@ export const primaryNavigation: NavigationItem[] = [
     label: "Notes",
     commandLabel: "Go to Notes",
     commandHint: "Course notes",
-    shortcut: "n",
     icon: "notes",
   },
   {
@@ -48,7 +44,6 @@ export const primaryNavigation: NavigationItem[] = [
     label: "Links",
     commandLabel: "Go to Links",
     commandHint: "Contact and profiles",
-    shortcut: "l",
     icon: "links",
   },
 ];
@@ -56,6 +51,7 @@ export const primaryNavigation: NavigationItem[] = [
 export const navigationContent = {
   primaryAriaLabel: "Primary",
   mobileAriaLabel: "Mobile primary",
+  skipToContentLabel: "Skip to content",
   paletteButtonLabel: "Navigate",
   paletteButtonShortcut: "Ctrl K",
   paletteButtonAriaLabel: "Open command palette",

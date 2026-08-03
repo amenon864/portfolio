@@ -9,12 +9,15 @@ export type CourseNote = {
 
 export const notesContent = {
   metadataTitle: "Course Notes",
+  metadataDescription:
+    "Course notes from computer science and mathematics courses at the University of Waterloo.",
   eyebrow: "Notes",
   title: "Course notes",
   introduction: [
     "Notes from courses and topics I have spent time with.",
   ],
   availableNotesLabel: "Available notes",
+  learningResourceType: "Course notes",
   pdfLabel: "PDF",
   entries: [
     {

@@ -21,7 +21,9 @@ export function CopyEmailButton() {
       onClick={copyEmail}
     >
       {copied ? <Check aria-hidden="true" size={16} /> : <Clipboard aria-hidden="true" size={16} />}
-      {copied ? linksContent.labels.copiedEmail : linksContent.labels.copyEmail}
+      <span aria-live="polite">
+        {copied ? linksContent.labels.copiedEmail : linksContent.labels.copyEmail}
+      </span>
     </button>
   );
 }

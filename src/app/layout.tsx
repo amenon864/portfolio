@@ -13,6 +13,21 @@ export const metadata: Metadata = {
     template: siteContent.metadata.titleTemplate,
   },
   description: siteContent.metadata.description,
+  authors: [{ name: siteContent.metadata.defaultTitle }],
+  creator: siteContent.metadata.defaultTitle,
+  category: siteContent.metadata.category,
+  openGraph: {
+    type: "website",
+    locale: "en_CA",
+    siteName: siteContent.metadata.defaultTitle,
+    title: siteContent.metadata.defaultTitle,
+    description: siteContent.metadata.description,
+  },
+  twitter: {
+    card: "summary",
+    title: siteContent.metadata.defaultTitle,
+    description: siteContent.metadata.description,
+  },
 };
 
 const displayModeScript = `
