@@ -43,13 +43,13 @@
   --text-muted: #555552;
   --text-subtle: #767672;
 
-  --accent: #8A2929;
-  --accent-orange: #8A4B20;
-  --accent-green: #3D643F;
-  --accent-red: #9B2727;
-  --accent-blue: #315F78;
-  --accent-purple: #69466F;
-  --focus-ring: rgba(49, 95, 120, 0.2);
+  --accent: #1B1B1A;
+  --accent-orange: #343432;
+  --accent-green: #464643;
+  --accent-red: #292928;
+  --accent-blue: #555552;
+  --accent-purple: #686864;
+  --focus-ring: rgba(27, 27, 26, 0.2);
   --scrim: rgba(27, 27, 26, 0.38);
 }
 

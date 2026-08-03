@@ -20,30 +20,39 @@ export default function NotesPage() {
         <h2 id="notes-title" className="sr-only">
           {notesContent.availableNotesLabel}
         </h2>
-        <div className="divide-y divide-line border-y border-line">
-          {notesContent.entries.map((item) => (
-            <article
-              key={item.fileName}
-              className="grid gap-4 py-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center"
-            >
-              <div>
-                <p className="font-mono text-xs uppercase text-accent">{item.courseCode}</p>
-                <h3 className="mt-2 text-xl font-semibold text-text">{item.courseName}</h3>
-                <p className="mt-2 text-sm text-muted">
-                  {[item.institution, item.term].filter(Boolean).join(" / ")}
-                </p>
+        <div className="space-y-8">
+          {notesContent.terms.map((term, termIndex) => (
+            <section key={term.term} aria-labelledby={`notes-term-${termIndex}`}>
+              <h3 id={`notes-term-${termIndex}`} className="font-mono text-sm font-semibold text-text">
+                {term.term}
+              </h3>
+              <div className="mt-3 divide-y divide-line border-y border-line">
+                {term.entries.map((item) => (
+                  <article
+                    key={item.fileName}
+                    className="grid gap-4 py-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center"
+                  >
+                    <div>
+                      <p className="font-mono text-xs uppercase text-accent">
+                        {item.courseCode}
+                      </p>
+                      <h4 className="mt-2 text-xl font-semibold text-text">{item.courseName}</h4>
+                      <p className="mt-2 text-sm text-muted">{item.institution}</p>
+                    </div>
+                    <a
+                      className="focus-ring inline-flex min-h-10 w-fit items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Download aria-hidden="true" size={16} />
+                      {notesContent.pdfLabel}
+                      <ExternalLink aria-hidden="true" size={14} />
+                    </a>
+                  </article>
+                ))}
               </div>
-              <a
-                className="focus-ring inline-flex min-h-10 w-fit items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-text transition duration-150 hover:border-accent hover:bg-raised"
-                href={item.href}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Download aria-hidden="true" size={16} />
-                {notesContent.pdfLabel}
-                <ExternalLink aria-hidden="true" size={14} />
-              </a>
-            </article>
+            </section>
           ))}
         </div>
       </section>
