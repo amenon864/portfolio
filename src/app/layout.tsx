@@ -8,6 +8,7 @@ import { SiteShell } from "@/components/SiteShell";
 import { siteContent } from "@/data/site";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteContent.url),
   title: {
     default: siteContent.metadata.defaultTitle,
     template: siteContent.metadata.titleTemplate,

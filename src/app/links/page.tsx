@@ -3,10 +3,14 @@ import { ExternalLink, Github, Mail } from "lucide-react";
 import { CopyEmailButton } from "@/components/CopyEmailButton";
 import { SectionHeader } from "@/components/SectionHeader";
 import { linksContent } from "@/data/links";
+import { routes } from "@/data/navigation";
 import { profile } from "@/data/profile";
 
 export const metadata: Metadata = {
   title: linksContent.metadataTitle,
+  alternates: {
+    canonical: routes.links,
+  },
 };
 
 const linkClassName =
@@ -50,4 +54,3 @@ export default function LinksPage() {
     </div>
   );
 }
-

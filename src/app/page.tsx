@@ -1,7 +1,15 @@
+import type { Metadata } from "next";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Tag } from "@/components/Tag";
 import { homeContent } from "@/data/home";
 import { profile } from "@/data/profile";
+import { routes } from "@/data/navigation";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: routes.home,
+  },
+};
 
 export default function HomePage() {
   return (

@@ -3,10 +3,14 @@ import { ExternalLink, Github } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Tag } from "@/components/Tag";
 import { activityContent } from "@/data/activity";
+import { routes } from "@/data/navigation";
 import { currentProjects, projectContent } from "@/data/projects";
 
 export const metadata: Metadata = {
   title: activityContent.metadataTitle,
+  alternates: {
+    canonical: routes.activity,
+  },
 };
 
 const populatedCourseGroups = activityContent.education.courseGroups.filter(

@@ -1,6 +1,7 @@
 import { profile } from "@/data/profile";
 
 export const siteContent = {
+  url: "https://aditya-menon.vercel.app",
   metadata: {
     defaultTitle: profile.name,
     titleTemplate: `%s | ${profile.name}`,

@@ -2,10 +2,14 @@ import type { Metadata } from "next";
 import { Download, ExternalLink } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { notesContent } from "@/data/notes";
+import { routes } from "@/data/navigation";
 
 export const metadata: Metadata = {
   title: notesContent.metadataTitle,
   description: notesContent.metadataDescription,
+  alternates: {
+    canonical: routes.notes,
+  },
   keywords: notesContent.entries.flatMap((note) => [
     note.courseCode,
     note.courseName,
