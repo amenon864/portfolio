@@ -1,7 +1,7 @@
 export const profile = {
   name: "Aditya Menon",
   initials: "asm",
-  title: "Computer Science student at the University of Waterloo",
+  title: "Computer Science Honours, Pure Mathematics Joint Honours",
   location: "Waterloo, Ontario",
   email: "adityamenon864@gmail.com",
   github: "https://github.com/amenon864",

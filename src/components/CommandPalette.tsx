@@ -3,55 +3,82 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ExternalLink, Github, Mail, Search } from "lucide-react";
+import { navigationIcons } from "@/components/navigationIcons";
+import { navigationContent, primaryNavigation } from "@/data/navigation";
 import { profile } from "@/data/profile";
+import { copyText } from "@/lib/clipboard";
 import { setDisplayMode } from "@/lib/displayMode";
 
 type CommandItem = {
   label: string;
   hint: string;
-  action: () => void;
+  action: () => void | Promise<void>;
   icon?: React.ReactNode;
+  keepOpen?: boolean;
 };
-
-function isTypingTarget(target: EventTarget | null) {
-  if (!(target instanceof HTMLElement)) return false;
-  const tag = target.tagName.toLowerCase();
-  return tag === "input" || tag === "textarea" || tag === "select" || target.isContentEditable;
-}
 
 export function CommandPalette() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
+  const [statusMessage, setStatusMessage] = useState("");
 
   const commands = useMemo<CommandItem[]>(
-    () => [
-      { label: "Go to Home", hint: "Navigation", action: () => router.push("/") },
-      { label: "Go to Background", hint: "Navigation", action: () => router.push("/resume") },
-      { label: "Go to Links", hint: "Navigation", action: () => router.push("/contact") },
-      { label: "Switch to Terminal mode", hint: "Display", action: () => setDisplayMode("terminal") },
-      { label: "Switch to Docs mode", hint: "Display", action: () => setDisplayMode("docs") },
-      {
-        label: "Copy email",
-        hint: profile.email,
-        icon: <Mail aria-hidden="true" size={16} />,
-        action: () => navigator.clipboard.writeText(profile.email),
-      },
-      {
-        label: "Open GitHub",
-        hint: "External",
-        icon: <Github aria-hidden="true" size={16} />,
-        action: () => window.location.assign(profile.github),
-      },
-      {
-        label: "Open portfolio source",
-        hint: "External",
-        icon: <ExternalLink aria-hidden="true" size={16} />,
-        action: () => window.location.assign(profile.portfolioSource),
-      },
-    ],
+    () => {
+      const navigationCommands = primaryNavigation.map((item) => {
+        const Icon = navigationIcons[item.icon];
+
+        return {
+          label: item.commandLabel,
+          hint: item.commandHint,
+          icon: <Icon aria-hidden="true" size={16} />,
+          action: () => router.push(item.href),
+        };
+      });
+
+      return [
+        ...navigationCommands,
+        {
+          label: navigationContent.displayCommands.terminal.label,
+          hint: navigationContent.displayCommands.terminal.hint,
+          action: () => setDisplayMode("terminal"),
+        },
+        {
+          label: navigationContent.displayCommands.docs.label,
+          hint: navigationContent.displayCommands.docs.hint,
+          action: () => setDisplayMode("docs"),
+        },
+        {
+          label: navigationContent.copyEmailCommandLabel,
+          hint: profile.email,
+          icon: <Mail aria-hidden="true" size={16} />,
+          keepOpen: true,
+          action: async () => {
+            const copied = await copyText(profile.email);
+            setStatusMessage(
+              copied
+                ? navigationContent.copiedEmailMessage
+                : navigationContent.copyEmailErrorMessage,
+            );
+          },
+        },
+        {
+          label: navigationContent.openGitHubCommandLabel,
+          hint: navigationContent.externalCommandHint,
+          icon: <Github aria-hidden="true" size={16} />,
+          action: () => window.location.assign(profile.github),
+        },
+        {
+          label: navigationContent.openSourceCommandLabel,
+          hint: navigationContent.externalCommandHint,
+          icon: <ExternalLink aria-hidden="true" size={16} />,
+          action: () => window.location.assign(profile.portfolioSource),
+        },
+      ];
+    },
     [router],
   );
 
@@ -74,11 +101,7 @@ export function CommandPalette() {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
         setOpen((current) => !current);
-        return;
       }
-
-      if (!open || isTypingTarget(event.target)) return;
-      if (event.key === "Escape") setOpen(false);
     }
 
     window.addEventListener("open-command-palette", onOpenPalette);
@@ -87,13 +110,23 @@ export function CommandPalette() {
       window.removeEventListener("open-command-palette", onOpenPalette);
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [open]);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
+    const previouslyFocused = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
     setQuery("");
     setActiveIndex(0);
+    setStatusMessage("");
     window.setTimeout(() => inputRef.current?.focus(), 0);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      if (previouslyFocused instanceof HTMLElement) previouslyFocused.focus();
+    };
   }, [open]);
 
   useEffect(() => {
@@ -102,19 +135,17 @@ export function CommandPalette() {
 
   if (!open) return null;
 
-  function runCommand(command: CommandItem) {
-    command.action();
-    setOpen(false);
+  async function runCommand(command: CommandItem) {
+    await command.action();
+    if (!command.keepOpen) setOpen(false);
   }
 
   function onInputKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.key === "Escape") {
-      event.preventDefault();
-      setOpen(false);
-    }
     if (event.key === "ArrowDown") {
       event.preventDefault();
-      setActiveIndex((index) => Math.min(index + 1, filteredCommands.length - 1));
+      if (filteredCommands.length > 0) {
+        setActiveIndex((index) => Math.min(index + 1, filteredCommands.length - 1));
+      }
     }
     if (event.key === "ArrowUp") {
       event.preventDefault();
@@ -122,7 +153,34 @@ export function CommandPalette() {
     }
     if (event.key === "Enter" && filteredCommands[activeIndex]) {
       event.preventDefault();
-      runCommand(filteredCommands[activeIndex]);
+      void runCommand(filteredCommands[activeIndex]);
+    }
+  }
+
+  function onDialogKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      setOpen(false);
+      return;
+    }
+
+    if (event.key !== "Tab" || !panelRef.current) return;
+
+    const focusableElements = Array.from(
+      panelRef.current.querySelectorAll<HTMLElement>(
+        'button:not([disabled]):not([tabindex="-1"]), input:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
+      ),
+    );
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements.at(-1);
+
+    if (!firstElement || !lastElement) return;
+    if (event.shiftKey && document.activeElement === firstElement) {
+      event.preventDefault();
+      lastElement.focus();
+    } else if (!event.shiftKey && document.activeElement === lastElement) {
+      event.preventDefault();
+      firstElement.focus();
     }
   }
 
@@ -133,37 +191,55 @@ export function CommandPalette() {
       aria-modal="true"
       aria-labelledby="command-title"
       onMouseDown={() => setOpen(false)}
+      onKeyDown={onDialogKeyDown}
     >
       <div
+        ref={panelRef}
         className="mx-auto max-w-xl overflow-hidden rounded-lg border border-line bg-panel shadow-[0_18px_60px_var(--scrim)]"
         onMouseDown={(event) => event.stopPropagation()}
       >
         <div className="flex items-center gap-3 border-b border-line px-4 py-3">
           <Search aria-hidden="true" size={17} className="text-muted" />
           <label id="command-title" className="sr-only" htmlFor="command-input">
-            Command palette
+            {navigationContent.paletteTitle}
           </label>
           <input
             ref={inputRef}
             id="command-input"
             className="h-10 min-w-0 flex-1 bg-transparent text-sm text-text outline-none placeholder:text-muted"
-            placeholder="Search commands"
+            placeholder={navigationContent.palettePlaceholder}
+            role="combobox"
+            aria-autocomplete="list"
+            aria-controls="command-listbox"
+            aria-expanded="true"
+            aria-activedescendant={
+              filteredCommands[activeIndex] ? `command-option-${activeIndex}` : undefined
+            }
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             onKeyDown={onInputKeyDown}
           />
         </div>
-        <div className="max-h-[60vh] overflow-y-auto p-2">
+        <div
+          id="command-listbox"
+          className="max-h-[60vh] overflow-y-auto p-2"
+          role="listbox"
+          aria-label={navigationContent.paletteTitle}
+        >
           {filteredCommands.length > 0 ? (
             filteredCommands.map((command, index) => (
               <button
                 key={`${command.label}-${command.hint}`}
+                id={`command-option-${index}`}
                 type="button"
+                role="option"
+                aria-selected={index === activeIndex}
+                tabIndex={-1}
                 className={`flex w-full items-center justify-between gap-4 rounded-md px-3 py-3 text-left text-sm transition-colors duration-100 ${
                   index === activeIndex ? "bg-raised text-text" : "text-muted hover:bg-raised hover:text-text"
                 }`}
                 onMouseEnter={() => setActiveIndex(index)}
-                onClick={() => runCommand(command)}
+                onClick={() => void runCommand(command)}
               >
                 <span className="flex min-w-0 items-center gap-3">
                   {command.icon ? <span className="text-accent">{command.icon}</span> : null}
@@ -173,9 +249,14 @@ export function CommandPalette() {
               </button>
             ))
           ) : (
-            <p className="px-3 py-6 text-sm text-muted">No commands found.</p>
+            <p className="px-3 py-6 text-sm text-muted">
+              {navigationContent.paletteEmptyMessage}
+            </p>
           )}
         </div>
+        <p className="sr-only" role="status" aria-live="polite">
+          {statusMessage}
+        </p>
       </div>
     </div>
   );

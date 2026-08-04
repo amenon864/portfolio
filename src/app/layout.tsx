@@ -1,15 +1,33 @@
 import type { Metadata } from "next";
+import "@fontsource-variable/fira-code/wght.css";
+import "@fontsource/libertinus-serif/latin-400.css";
+import "@fontsource/libertinus-serif/latin-400-italic.css";
+import "@fontsource/libertinus-serif/latin-600.css";
 import "./globals.css";
 import { SiteShell } from "@/components/SiteShell";
-import { profile } from "@/data/profile";
+import { siteContent } from "@/data/site";
 
 export const metadata: Metadata = {
   title: {
-    default: `${profile.name} | Portfolio`,
-    template: `%s | ${profile.name}`,
+    default: siteContent.metadata.defaultTitle,
+    template: siteContent.metadata.titleTemplate,
   },
-  description:
-    "Aditya Menon's personal website and portfolio",
+  description: siteContent.metadata.description,
+  authors: [{ name: siteContent.metadata.defaultTitle }],
+  creator: siteContent.metadata.defaultTitle,
+  category: siteContent.metadata.category,
+  openGraph: {
+    type: "website",
+    locale: "en_CA",
+    siteName: siteContent.metadata.defaultTitle,
+    title: siteContent.metadata.defaultTitle,
+    description: siteContent.metadata.description,
+  },
+  twitter: {
+    card: "summary",
+    title: siteContent.metadata.defaultTitle,
+    description: siteContent.metadata.description,
+  },
 };
 
 const displayModeScript = `
@@ -18,9 +36,7 @@ const displayModeScript = `
     const storedMode = window.localStorage.getItem("display-mode");
     const mode = storedMode === "terminal" || storedMode === "docs"
       ? storedMode
-      : window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "terminal"
-        : "docs";
+      : "terminal";
 
     document.documentElement.dataset.mode = mode;
   } catch {

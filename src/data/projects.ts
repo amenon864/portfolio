@@ -1,18 +1,27 @@
+export type ProjectStatus = "Active" | "Complete" | "In progress" | "Concept";
+
 export type Project = {
   slug: string;
   title: string;
   subtitle: string;
-  status: "Active" | "Complete" | "In progress" | "Concept";
+  status: ProjectStatus;
   categories: string[];
   stack: string[];
   summary: string;
-  highlights: string[];
   privateNote?: string;
   links?: {
     github?: string;
     live?: string;
     caseStudy?: string;
   };
+};
+
+export const projectContent = {
+  linkLabels: {
+    github: "GitHub",
+    live: "Live demo",
+    caseStudy: "Case study",
+  },
 };
 
 export const projects: Project[] = [
@@ -25,11 +34,6 @@ export const projects: Project[] = [
     stack: ["Next.js", "TypeScript", "FastAPI", "PostgreSQL", "Docker"],
     summary:
       "A secure secret-sharing app built around encrypted storage, one-time links, expiry, and reliable failure handling.",
-    highlights: [
-      "Designed frontend/backend split",
-      "Uses database-backed paste storage",
-      "Built with deployment and containerization in mind"
-    ],
     links: {
       github: "https://github.com/amenon864/SecurePaste",
     },
@@ -42,14 +46,15 @@ export const projects: Project[] = [
     categories: ["Web", "Frontend", "Design"],
     stack: ["Next.js", "TypeScript", "Tailwind CSS"],
     summary:
-      "This site! Currently empty, but I have plans for it.",
-    highlights: [
-      "Built with Next.js App Router, TypeScript, and Tailwind CSS",
-      "Designed around compact project notes and keyboard navigation",
-      "Includes optional command palette and keyboard navigation"
-    ],
+      "A personal technical homepage for activity, course notes, and things I am building.",
     links: {
       github: "https://github.com/amenon864/portfolio",
     },
   },
 ];
+
+const currentProjectStatuses: ProjectStatus[] = ["Active", "In progress"];
+
+export const currentProjects = projects.filter((project) =>
+  currentProjectStatuses.includes(project.status),
+);

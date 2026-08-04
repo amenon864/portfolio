@@ -1,36 +1,32 @@
 "use client";
 
 import Link from "next/link";
-import { Command, FileText, Home, Mail } from "lucide-react";
+import { Command } from "lucide-react";
 import { ModeToggle } from "@/components/ModeToggle";
+import { navigationIcons } from "@/components/navigationIcons";
+import { navigationContent, primaryNavigation, routes } from "@/data/navigation";
 import { profile } from "@/data/profile";
 import { cn } from "@/lib/utils";
 import { useMountedPathname } from "@/lib/useMountedPathname";
-
-const navItems = [
-  { href: "/", label: "Home", icon: Home },
-  { href: "/resume", label: "Background", icon: FileText },
-  { href: "/contact", label: "Links", icon: Mail },
-];
 
 export function Sidebar() {
   const pathname = useMountedPathname();
 
   return (
-    <aside className="sticky top-0 hidden h-screen border-r border-line px-5 py-7 lg:block">
+    <aside className="site-sidebar sticky top-0 hidden h-screen border-r border-line px-5 py-7 lg:block">
       <div className="flex h-full flex-col">
-        <Link href="/" className="focus-ring rounded-sm">
+        <Link href={routes.home} className="focus-ring rounded-sm">
           <p className="text-base font-semibold text-text">{profile.initials}.</p>
           <p className="mt-1 text-xs leading-5 text-muted">{profile.location}</p>
         </Link>
         <div className="mt-6">
           <ModeToggle />
         </div>
-        <nav aria-label="Primary" className="mt-8 space-y-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
+        <nav aria-label={navigationContent.primaryAriaLabel} className="mt-8 space-y-1">
+          {primaryNavigation.map((item) => {
+            const Icon = navigationIcons[item.icon];
             const active = pathname
-              ? item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
+              ? item.href === routes.home ? pathname === routes.home : pathname.startsWith(item.href)
               : false;
 
             return (
@@ -58,12 +54,12 @@ export function Sidebar() {
         >
           <span className="inline-flex items-center gap-2">
             <Command aria-hidden="true" size={14} />
-            Navigate
+            {navigationContent.paletteButtonLabel}
           </span>
-          <span className="font-mono">Ctrl K</span>
+          <span className="font-mono">{navigationContent.paletteButtonShortcut}</span>
         </button>
         <p className="mt-auto text-xs leading-5 text-muted">
-          Press <span className="font-mono text-text">Ctrl+K</span> to navigate.
+          {navigationContent.paletteHint}
         </p>
       </div>
     </aside>

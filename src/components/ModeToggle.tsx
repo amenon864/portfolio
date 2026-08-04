@@ -8,6 +8,7 @@ import {
   setDisplayMode,
   type DisplayMode,
 } from "@/lib/displayMode";
+import { navigationContent } from "@/data/navigation";
 import { cn } from "@/lib/utils";
 
 export function ModeToggle() {
@@ -33,7 +34,7 @@ export function ModeToggle() {
     <div
       className="inline-flex w-fit rounded-md border border-line bg-panel p-0.5 text-xs transition-colors duration-150"
       role="group"
-      aria-label="Switch display mode"
+      aria-label={navigationContent.displayModeAriaLabel}
     >
       {displayModes.map((displayMode) => {
         const active = mode === displayMode;

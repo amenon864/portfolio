@@ -4,17 +4,14 @@ export type DisplayMode = (typeof displayModes)[number];
 
 export const displayModeLabels: Record<DisplayMode, string> = {
   terminal: "Terminal",
-  docs: "Docs",
+  docs: "Paper",
 };
 
 const storageKey = "display-mode";
+let transitionFrame: number | null = null;
 
 export function isDisplayMode(value: string | null): value is DisplayMode {
   return value === "terminal" || value === "docs";
-}
-
-export function getSystemDisplayMode(): DisplayMode {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "terminal" : "docs";
 }
 
 export function getStoredDisplayMode(): DisplayMode | null {
@@ -25,11 +22,20 @@ export function getStoredDisplayMode(): DisplayMode | null {
 export function getCurrentDisplayMode(): DisplayMode {
   const documentMode = document.documentElement.dataset.mode ?? null;
   if (isDisplayMode(documentMode)) return documentMode;
-  return getStoredDisplayMode() ?? getSystemDisplayMode();
+  return getStoredDisplayMode() ?? "terminal";
 }
 
 export function setDisplayMode(mode: DisplayMode) {
+  if (transitionFrame !== null) window.cancelAnimationFrame(transitionFrame);
+  document.documentElement.classList.add("changing-mode");
   document.documentElement.dataset.mode = mode;
   window.localStorage.setItem(storageKey, mode);
   window.dispatchEvent(new CustomEvent<DisplayMode>("display-mode-change", { detail: mode }));
+
+  transitionFrame = window.requestAnimationFrame(() => {
+    transitionFrame = window.requestAnimationFrame(() => {
+      document.documentElement.classList.remove("changing-mode");
+      transitionFrame = null;
+    });
+  });
 }
