@@ -6,10 +6,6 @@ export const homeContent = {
   interestsLabel: "Interests",
   current: {
     heading: "Currently",
-    items: [
-      "Building SecurePaste, an encrypted secret-sharing application.",
-      "Developing this site as a home for my activity and course notes.",
-      "Publishing course notes, beginning with CS 245: Computability.",
-    ],
+    maxItems: 5,
   },
 };

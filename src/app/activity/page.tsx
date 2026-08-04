@@ -3,8 +3,8 @@ import { ExternalLink, Github } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Tag } from "@/components/Tag";
 import { activityContent } from "@/data/activity";
+import { currentItems } from "@/data/current";
 import { routes } from "@/data/navigation";
-import { currentProjects, projectContent } from "@/data/projects";
 
 export const metadata: Metadata = {
   title: activityContent.metadataTitle,
@@ -19,7 +19,8 @@ const populatedCourseGroups = activityContent.education.courseGroups.filter(
 const chronologicalEntries = [...activityContent.timeline.entries].sort((first, second) =>
   second.sortDate.localeCompare(first.sortDate),
 );
-const hasChronology = currentProjects.length > 0 || chronologicalEntries.length > 0;
+const activityCurrentItems = currentItems.filter((item) => item.surfaces.includes("activity"));
+const hasChronology = activityCurrentItems.length > 0 || chronologicalEntries.length > 0;
 
 export default function ActivityPage() {
   return (
@@ -138,9 +139,9 @@ export default function ActivityPage() {
             {activityContent.timeline.heading}
           </h2>
           <div className="divide-y divide-line border-y border-line">
-            {currentProjects.map((project) => (
+            {activityCurrentItems.map((item) => (
               <article
-                key={project.slug}
+                key={item.id}
                 className="grid gap-4 py-5 sm:grid-cols-[150px_minmax(0,1fr)]"
               >
                 <div>
@@ -152,22 +153,35 @@ export default function ActivityPage() {
                   </p>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-text">{project.title}</h3>
-                  <p className="mt-1 text-sm text-muted">{project.subtitle}</p>
-                  <p className="mt-3 text-sm leading-7 text-muted">{project.summary}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {project.stack.map((technology) => (
-                      <Tag key={technology}>{technology}</Tag>
-                    ))}
-                  </div>
-                  {project.links?.github ? (
-                    <a
-                      className="focus-ring mt-4 inline-flex items-center gap-1 rounded-sm text-sm text-muted hover:text-text"
-                      href={project.links.github}
-                    >
-                      <Github aria-hidden="true" size={14} />
-                      {projectContent.linkLabels.github}
-                    </a>
+                  <h3 className="text-lg font-semibold text-text">{item.title}</h3>
+                  {item.subtitle ? <p className="mt-1 text-sm text-muted">{item.subtitle}</p> : null}
+                  {item.description ? (
+                    <p className="mt-3 text-sm leading-7 text-muted">{item.description}</p>
+                  ) : null}
+                  {item.tags && item.tags.length > 0 ? (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {item.tags.map((tag) => (
+                        <Tag key={tag}>{tag}</Tag>
+                      ))}
+                    </div>
+                  ) : null}
+                  {item.links && item.links.length > 0 ? (
+                    <div className="mt-4 flex flex-wrap gap-4 text-sm">
+                      {item.links.map((link) => (
+                        <a
+                          key={link.href}
+                          className="focus-ring inline-flex items-center gap-1 rounded-sm text-muted hover:text-text"
+                          href={link.href}
+                        >
+                          {link.icon === "github" ? (
+                            <Github aria-hidden="true" size={14} />
+                          ) : (
+                            <ExternalLink aria-hidden="true" size={13} />
+                          )}
+                          {link.label}
+                        </a>
+                      ))}
+                    </div>
                   ) : null}
                 </div>
               </article>

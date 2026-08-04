@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Tag } from "@/components/Tag";
+import { currentItems } from "@/data/current";
 import { homeContent } from "@/data/home";
 import { profile } from "@/data/profile";
 import { routes } from "@/data/navigation";
@@ -10,6 +11,10 @@ export const metadata: Metadata = {
     canonical: routes.home,
   },
 };
+
+const homeCurrentItems = currentItems
+  .filter((item) => item.surfaces.includes("home"))
+  .slice(0, homeContent.current.maxItems);
 
 export default function HomePage() {
   return (
@@ -32,18 +37,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {homeContent.current.items.length > 0 ? (
+      {homeCurrentItems.length > 0 ? (
         <section aria-labelledby="currently-title" className="border-y border-line py-5">
           <h2 id="currently-title" className="text-xl font-semibold text-text">
             {homeContent.current.heading}
           </h2>
           <ul className="mt-4 space-y-2 text-sm leading-6 text-muted">
-            {homeContent.current.items.map((item) => (
-              <li key={item} className="grid grid-cols-[1rem_minmax(0,1fr)] gap-2">
+            {homeCurrentItems.map((item) => (
+              <li key={item.id} className="grid grid-cols-[1rem_minmax(0,1fr)] gap-2">
                 <span aria-hidden="true" className="font-mono text-accent">
                   &gt;
                 </span>
-                <span>{item}</span>
+                <span>{item.homeSummary}</span>
               </li>
             ))}
           </ul>

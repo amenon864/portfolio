@@ -5,7 +5,7 @@ export const siteContent = {
   metadata: {
     defaultTitle: profile.name,
     titleTemplate: `%s | ${profile.name}`,
-    description: `${profile.name}'s personal technical homepage, activity, and course notes.`,
+    description: `${profile.name}'s personal homepage for technical interests and current activity.`,
     category: "Personal portfolio",
   },
 };
