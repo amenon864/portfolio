@@ -83,7 +83,10 @@ export const activityEntries: ActivityEntry[] = [
     type: "Co-op",
     title: "Firmware Development, Ford Canada",
     homeSummary: "Firmware Development at Ford Canada — Fall 2026",
-    description: [],
+    description: [
+      "I will be joining Ford Canada for a firmware "
+      + "development co-op in Fall 2026."
+    ],
   },
   {
     id: "drp-fall-2026",
@@ -93,7 +96,10 @@ export const activityEntries: ActivityEntry[] = [
     type: "Academic",
     title: "DRP",
     homeSummary: "Directed Research Program: Lattice Cryptography — Fall 2026",
-    description: [],
+    description: [
+      "I will be taking part in a Directed Research Program "
+      + "on lattice cryptography in Fall 2026."
+    ],
   },
   {
     id: "securepaste",
@@ -103,7 +109,21 @@ export const activityEntries: ActivityEntry[] = [
     title: "SecurePaste",
     subtitle: "Encrypted secret-sharing app",
     description: [
-      "A secure secret-sharing app built around encrypted storage, one-time links, expiry, and reliable failure handling.",
+      "SecurePaste is an expiring secret-sharing web app "
+      + "I  built as a security-focused project. "
+      + "Secret contents are encrypted before being "
+      + "stored, access tokens are hashed rather "
+      + "than stored directly in the database, and "
+      + "links support expiration, revocation, and "
+      + "view limits. I also worked through the "
+      + "concurrency needed to make one-time and "
+      + "view-limited links behave correctly under "
+      + "PostgreSQL. I consider it a completed prototype "
+      + "rather than something I would use for real "
+      + "secrets, since there are issues with token "
+      + "handling and client-side caching. It would take "
+      + "additional security hardening to get it "
+      + "production-ready."
     ],
     tags: ["Next.js", "TypeScript", "FastAPI", "PostgreSQL", "Docker"],
     links: [
