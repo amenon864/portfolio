@@ -2,31 +2,30 @@ import type { Metadata } from "next";
 import { ExternalLink, Github } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Tag } from "@/components/Tag";
-import { activityContent } from "@/data/activity";
-import { currentItems } from "@/data/current";
+import { activityEntries, activityPageContent } from "@/data/activity";
 import { routes } from "@/data/navigation";
 
 export const metadata: Metadata = {
-  title: activityContent.metadataTitle,
+  title: activityPageContent.metadataTitle,
   alternates: {
     canonical: routes.activity,
   },
 };
 
-const populatedCourseGroups = activityContent.education.courseGroups.filter(
+const populatedCourseGroups = activityPageContent.education.courseGroups.filter(
   (group) => group.courses.length > 0,
 );
-const chronologicalEntries = [...activityContent.timeline.entries].sort((first, second) =>
-  second.sortDate.localeCompare(first.sortDate),
-);
-const activityCurrentItems = currentItems.filter((item) => item.surfaces.includes("activity"));
-const hasChronology = activityCurrentItems.length > 0 || chronologicalEntries.length > 0;
+const statusOrder = { upcoming: 0, current: 1, past: 2 } as const;
+const chronologicalEntries = [...activityEntries].sort((first, second) => {
+  if (first.status !== second.status) return statusOrder[first.status] - statusOrder[second.status];
+  return (second.sortDate ?? "").localeCompare(first.sortDate ?? "");
+});
 
 export default function ActivityPage() {
   return (
     <div className="max-w-4xl space-y-10">
-      <SectionHeader eyebrow={activityContent.eyebrow} title={activityContent.title}>
-        {activityContent.introduction.map((paragraph) => (
+      <SectionHeader eyebrow={activityPageContent.eyebrow} title={activityPageContent.title}>
+        {activityPageContent.introduction.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
       </SectionHeader>
@@ -35,31 +34,31 @@ export default function ActivityPage() {
         <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <h2 id="education-title" className="text-xl font-semibold text-text">
-              {activityContent.education.heading}
+              {activityPageContent.education.heading}
             </h2>
             <p className="mt-3 text-base font-medium text-text">
-              {activityContent.education.institution}
+              {activityPageContent.education.institution}
             </p>
             <p className="mt-1 text-sm leading-6 text-muted">
-              {activityContent.education.program}
+              {activityPageContent.education.program}
             </p>
           </div>
-          {activityContent.education.period ? (
-            <p className="font-mono text-xs text-muted">{activityContent.education.period}</p>
+          {activityPageContent.education.period ? (
+            <p className="font-mono text-xs text-muted">{activityPageContent.education.period}</p>
           ) : null}
         </div>
 
-        {activityContent.education.description.length > 0 ? (
+        {activityPageContent.education.description.length > 0 ? (
           <div className="max-w-3xl space-y-3 text-sm leading-7 text-muted">
-            {activityContent.education.description.map((paragraph) => (
+            {activityPageContent.education.description.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
           </div>
         ) : null}
 
-        {activityContent.education.facts.length > 0 ? (
+        {activityPageContent.education.facts.length > 0 ? (
           <dl className="grid gap-3 sm:grid-cols-2">
-            {activityContent.education.facts.map((fact) => (
+            {activityPageContent.education.facts.map((fact) => (
               <div key={fact.label} className="border-l border-line pl-3">
                 <dt className="font-mono text-xs uppercase text-subtle">{fact.label}</dt>
                 <dd className="mt-1 text-sm text-muted">{fact.value}</dd>
@@ -68,13 +67,13 @@ export default function ActivityPage() {
           </dl>
         ) : null}
 
-        {activityContent.education.interests.items.length > 0 ? (
+        {activityPageContent.education.interests.items.length > 0 ? (
           <section aria-labelledby="education-interests-title" className="space-y-3">
             <h3 id="education-interests-title" className="text-sm font-semibold text-text">
-              {activityContent.education.interests.heading}
+              {activityPageContent.education.interests.heading}
             </h3>
             <div className="flex flex-wrap gap-2">
-              {activityContent.education.interests.items.map((interest) => (
+              {activityPageContent.education.interests.items.map((interest) => (
                 <Tag key={interest}>{interest}</Tag>
               ))}
             </div>
@@ -110,13 +109,13 @@ export default function ActivityPage() {
           </div>
         ) : null}
 
-        {activityContent.education.recognition.items.length > 0 ? (
+        {activityPageContent.education.recognition.items.length > 0 ? (
           <section aria-labelledby="education-recognition-title" className="space-y-3">
             <h3 id="education-recognition-title" className="text-sm font-semibold text-text">
-              {activityContent.education.recognition.heading}
+              {activityPageContent.education.recognition.heading}
             </h3>
             <ul className="space-y-2">
-              {activityContent.education.recognition.items.map((item) => (
+              {activityPageContent.education.recognition.items.map((item) => (
                 <li
                   key={`${item.date}-${item.title}`}
                   className="grid gap-1 text-sm sm:grid-cols-[120px_minmax(0,1fr)]"
@@ -133,62 +132,15 @@ export default function ActivityPage() {
         ) : null}
       </section>
 
-      {hasChronology ? (
+      {chronologicalEntries.length > 0 ? (
         <section aria-labelledby="timeline-title" className="space-y-5">
           <h2 id="timeline-title" className="text-xl font-semibold text-text">
-            {activityContent.timeline.heading}
+            {activityPageContent.chronologyHeading}
           </h2>
           <div className="divide-y divide-line border-y border-line">
-            {activityCurrentItems.map((item) => (
-              <article
-                key={item.id}
-                className="grid gap-4 py-5 sm:grid-cols-[150px_minmax(0,1fr)]"
-              >
-                <div>
-                  <p className="font-mono text-xs text-accent">
-                    {activityContent.timeline.currentPeriodLabel}
-                  </p>
-                  <p className="mt-2 font-mono text-[11px] uppercase text-subtle">
-                    {activityContent.timeline.currentTypeLabel}
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-text">{item.title}</h3>
-                  {item.subtitle ? <p className="mt-1 text-sm text-muted">{item.subtitle}</p> : null}
-                  {item.description ? (
-                    <p className="mt-3 text-sm leading-7 text-muted">{item.description}</p>
-                  ) : null}
-                  {item.tags && item.tags.length > 0 ? (
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {item.tags.map((tag) => (
-                        <Tag key={tag}>{tag}</Tag>
-                      ))}
-                    </div>
-                  ) : null}
-                  {item.links && item.links.length > 0 ? (
-                    <div className="mt-4 flex flex-wrap gap-4 text-sm">
-                      {item.links.map((link) => (
-                        <a
-                          key={link.href}
-                          className="focus-ring inline-flex items-center gap-1 rounded-sm text-muted hover:text-text"
-                          href={link.href}
-                        >
-                          {link.icon === "github" ? (
-                            <Github aria-hidden="true" size={14} />
-                          ) : (
-                            <ExternalLink aria-hidden="true" size={13} />
-                          )}
-                          {link.label}
-                        </a>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
-              </article>
-            ))}
             {chronologicalEntries.map((entry) => (
               <article
-                key={`${entry.period}-${entry.title}`}
+                key={entry.id}
                 className="grid gap-4 py-5 sm:grid-cols-[150px_minmax(0,1fr)]"
               >
                 <div>
@@ -197,6 +149,9 @@ export default function ActivityPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-text">{entry.title}</h3>
+                  {entry.subtitle ? (
+                    <p className="mt-1 text-sm text-muted">{entry.subtitle}</p>
+                  ) : null}
                   {entry.organization ? (
                     <p className="mt-1 text-sm text-muted">{entry.organization}</p>
                   ) : null}
@@ -220,8 +175,12 @@ export default function ActivityPage() {
                           className="focus-ring inline-flex items-center gap-1 rounded-sm text-muted hover:text-text"
                           href={link.href}
                         >
+                          {link.icon === "github" ? (
+                            <Github aria-hidden="true" size={14} />
+                          ) : (
+                            <ExternalLink aria-hidden="true" size={13} />
+                          )}
                           {link.label}
-                          <ExternalLink aria-hidden="true" size={13} />
                         </a>
                       ))}
                     </div>
