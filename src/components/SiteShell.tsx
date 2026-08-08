@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Sidebar } from "@/components/Sidebar";
 import { TopNav } from "@/components/TopNav";
 import { navigationContent } from "@/data/navigation";
+import { siteFeatures } from "@/data/site";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
@@ -13,7 +14,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       >
         {navigationContent.skipToContentLabel}
       </a>
-      <CommandPalette />
+      {siteFeatures.commandPalette ? <CommandPalette /> : null}
       <TopNav />
       <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)]">
         <Sidebar />

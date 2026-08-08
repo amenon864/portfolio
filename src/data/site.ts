@@ -1,5 +1,9 @@
 import { profile } from "@/data/profile";
 
+export const siteFeatures = {
+  commandPalette: false,
+} as const;
+
 export const siteContent = {
   url: "https://aditya-menon.vercel.app",
   metadata: {

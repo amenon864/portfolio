@@ -6,6 +6,7 @@ import { ModeToggle } from "@/components/ModeToggle";
 import { navigationIcons } from "@/components/navigationIcons";
 import { navigationContent, primaryNavigation, routes } from "@/data/navigation";
 import { profile } from "@/data/profile";
+import { siteFeatures } from "@/data/site";
 import { cn } from "@/lib/utils";
 import { useMountedPathname } from "@/lib/useMountedPathname";
 
@@ -47,20 +48,24 @@ export function Sidebar() {
             );
           })}
         </nav>
-        <button
-          type="button"
-          className="focus-ring mt-8 flex w-full items-center justify-between rounded-md border border-line px-3 py-2 text-left text-xs text-muted transition duration-150 hover:border-accent hover:text-text"
-          onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
-        >
-          <span className="inline-flex items-center gap-2">
-            <Command aria-hidden="true" size={14} />
-            {navigationContent.paletteButtonLabel}
-          </span>
-          <span className="font-mono">{navigationContent.paletteButtonShortcut}</span>
-        </button>
-        <p className="mt-auto text-xs leading-5 text-muted">
-          {navigationContent.paletteHint}
-        </p>
+        {siteFeatures.commandPalette ? (
+          <>
+            <button
+              type="button"
+              className="focus-ring mt-8 flex w-full items-center justify-between rounded-md border border-line px-3 py-2 text-left text-xs text-muted transition duration-150 hover:border-accent hover:text-text"
+              onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
+            >
+              <span className="inline-flex items-center gap-2">
+                <Command aria-hidden="true" size={14} />
+                {navigationContent.paletteButtonLabel}
+              </span>
+              <span className="font-mono">{navigationContent.paletteButtonShortcut}</span>
+            </button>
+            <p className="mt-auto text-xs leading-5 text-muted">
+              {navigationContent.paletteHint}
+            </p>
+          </>
+        ) : null}
       </div>
     </aside>
   );

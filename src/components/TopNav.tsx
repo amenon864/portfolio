@@ -6,6 +6,7 @@ import { ModeToggle } from "@/components/ModeToggle";
 import { navigationIcons } from "@/components/navigationIcons";
 import { navigationContent, primaryNavigation, routes } from "@/data/navigation";
 import { profile } from "@/data/profile";
+import { siteFeatures } from "@/data/site";
 import { cn } from "@/lib/utils";
 import { useMountedPathname } from "@/lib/useMountedPathname";
 
@@ -45,14 +46,16 @@ export function TopNav() {
               </Link>
             );
           })}
-          <button
-            type="button"
-            className="focus-ring inline-flex h-9 w-9 items-center justify-center rounded-md text-muted transition duration-150 hover:bg-raised hover:text-text"
-            aria-label={navigationContent.paletteButtonAriaLabel}
-            onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
-          >
-            <Command aria-hidden="true" size={17} />
-          </button>
+          {siteFeatures.commandPalette ? (
+            <button
+              type="button"
+              className="focus-ring inline-flex h-9 w-9 items-center justify-center rounded-md text-muted transition duration-150 hover:bg-raised hover:text-text"
+              aria-label={navigationContent.paletteButtonAriaLabel}
+              onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
+            >
+              <Command aria-hidden="true" size={17} />
+            </button>
+          ) : null}
         </nav>
       </div>
     </header>
