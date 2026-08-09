@@ -67,27 +67,18 @@ export default function ActivityPage() {
           </dl>
         ) : null}
 
-        {activityPageContent.education.interests.items.length > 0 ? (
-          <section aria-labelledby="education-interests-title" className="space-y-3">
-            <h3 id="education-interests-title" className="text-sm font-semibold text-text">
-              {activityPageContent.education.interests.heading}
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {activityPageContent.education.interests.items.map((interest) => (
-                <Tag key={interest}>{interest}</Tag>
-              ))}
-            </div>
-          </section>
-        ) : null}
-
         {populatedCourseGroups.length > 0 ? (
           <div className="grid gap-5 sm:grid-cols-2">
             {populatedCourseGroups.map((group, index) => (
-              <section key={group.heading} aria-labelledby={`course-group-${index}`}>
+              <section
+                key={group.heading}
+                aria-labelledby={`course-group-${index}`}
+                className="sm:col-span-2"
+              >
                 <h3 id={`course-group-${index}`} className="text-sm font-semibold text-text">
                   {group.heading}
                 </h3>
-                <ul className="mt-3 space-y-2 text-sm text-muted">
+                <ul className="mt-3 grid gap-x-5 gap-y-2 text-sm text-muted sm:grid-cols-2">
                   {group.courses.map((course) => (
                     <li key={`${course.code}-${course.title}`}>
                       {course.href ? (
@@ -108,29 +99,29 @@ export default function ActivityPage() {
             ))}
           </div>
         ) : null}
-
-        {activityPageContent.education.recognition.items.length > 0 ? (
-          <section aria-labelledby="education-recognition-title" className="space-y-3">
-            <h3 id="education-recognition-title" className="text-sm font-semibold text-text">
-              {activityPageContent.education.recognition.heading}
-            </h3>
-            <ul className="space-y-2">
-              {activityPageContent.education.recognition.items.map((item) => (
-                <li
-                  key={`${item.date}-${item.title}`}
-                  className="grid gap-1 text-sm sm:grid-cols-[120px_minmax(0,1fr)]"
-                >
-                  <span className="font-mono text-xs text-accent">{item.date}</span>
-                  <span className="text-muted">
-                    <strong className="font-medium text-text">{item.title}</strong>
-                    {item.detail ? ` - ${item.detail}` : null}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ) : null}
       </section>
+
+      {activityPageContent.recognition.items.length > 0 ? (
+        <section aria-labelledby="recognition-title" className="space-y-3">
+          <h2 id="recognition-title" className="text-xl font-semibold text-text">
+            {activityPageContent.recognition.heading}
+          </h2>
+          <ul className="space-y-2">
+            {activityPageContent.recognition.items.map((item) => (
+              <li
+                key={`${item.date}-${item.title}`}
+                className="grid gap-1 text-sm sm:grid-cols-[120px_minmax(0,1fr)]"
+              >
+                <span className="font-mono text-xs text-accent">{item.date}</span>
+                <span className="text-muted">
+                  <strong className="font-medium text-text">{item.title}</strong>
+                  {item.detail ? ` - ${item.detail}` : null}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       {chronologicalEntries.length > 0 ? (
         <section aria-labelledby="timeline-title" className="space-y-5">

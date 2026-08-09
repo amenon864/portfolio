@@ -50,26 +50,65 @@ export const activityPageContent = {
   metadataTitle: "Activity",
   eyebrow: "Activity",
   title: "Activity",
-  introduction: [] as string[],
+  introduction: [
+    "A selective record of projects, research, "
+    + "co-op work, and academic activities I've been "
+    + "a part of.",
+  ],
   education: {
     heading: "Education",
     institution: "University of Waterloo",
     program: "Computer Science Honours, Pure Mathematics Joint Honours",
-    period: "",
-    description: [] as string[],
-    facts: [] as EducationFact[],
-    interests: {
-      heading: "Mathematical interests",
-      items: [] as string[],
-    },
+    period: "September 2025 - April 2030",
+    description: [
+      "My main mathematical interests are analysis, "
+      + "graph theory, and logic, especially "
+      + "computability and formal reasoning.",
+      "In computer science, I’m most interested in "
+      + "algorithms, programming languages, embedded "
+      + "systems, and lower-level software.",
+    ],
+    facts: [
+      { label: "Expected graduation", value: "2030" },
+      { label: "Program type", value: "Co-op" },
+    ] as EducationFact[],
     courseGroups: [
-      { heading: "Courses that shaped my interests", courses: [] },
-      { heading: "Courses I want to take", courses: [] },
+      {
+        heading: "Courses that shaped my interests",
+        courses: [
+          { code: "MATH 145", title: "Algebra (Advanced Level)" },
+          { code: "MATH 147/148/247", title: "Calculus (Advanced Level)" },          {
+            code: "MATH 249",
+            title: "Introduction to Combinatorics (Advanced Level)",
+          },
+          {
+            code: "CS 146",
+            title: "Elementary Algorithm Design and Data Abstraction (Advanced Level)",
+          },
+          { code: "CS 245", title: "Logic and Computation" },
+        ],
+      },
     ] as CourseGroup[],
-    recognition: {
-      heading: "Recognition",
-      items: [] as RecognitionItem[],
-    },
+  },
+  recognition: {
+    heading: "Recognition",
+    items: [
+      {
+        date: "October 2025",
+        title: "Waterloo ICPC Local Contest",
+        detail: "Placed 22nd out of 100+ participants.",
+      },
+      {
+        date: "February 2025",
+        title: "Indian National Olympiad in Informatics",
+        detail: "Received a Bronze Medal.",
+      },
+      {
+        date: "September 2024",
+        title: "Qatar Collegiate Programming Contest",
+        detail: "Placed 1st as a team.",
+      },
+    ] as RecognitionItem[],
   },
   chronologyHeading: "Chronology",
 };
@@ -79,38 +118,43 @@ export const activityEntries: ActivityEntry[] = [
     id: "ford-fall-2026",
     status: "upcoming",
     sortDate: "2026-09",
-    period: "Fall 2026",
+    period: "September–December 2026",
     type: "Co-op",
-    title: "Firmware Development, Ford Canada",
+    title: "Firmware Development",
+    organization: "Ford Canada",
     homeSummary: "Firmware Development at Ford Canada — Fall 2026",
     description: [
       "I will be joining Ford Canada for a firmware "
       + "development co-op in Fall 2026."
     ],
+    tags: ["Firmware", "Embedded Systems"],
   },
   {
     id: "drp-fall-2026",
     status: "upcoming",
     sortDate: "2026-09",
     period: "Fall 2026",
-    type: "Academic",
-    title: "DRP",
+    type: "Research",
+    title: "Introduction to Lattice Cryptography",
+    organization: "University of Waterloo",
     homeSummary: "Directed Research Program: Lattice Cryptography — Fall 2026",
     description: [
       "I will be taking part in a Directed Research Program "
       + "on lattice cryptography in Fall 2026."
     ],
+    tags: ["Lattice Cryptography"],
   },
   {
     id: "securepaste",
-    status: "current",
-    period: "Present",
+    status: "past",
+    sortDate: "2026-05",
+    period: "May 2026",
     type: "Project",
     title: "SecurePaste",
     subtitle: "Encrypted secret-sharing app",
     description: [
       "SecurePaste is an expiring secret-sharing web app "
-      + "I  built as a security-focused project. "
+      + "I built as a security-focused project. "
       + "Secret contents are encrypted before being "
       + "stored, access tokens are hashed rather "
       + "than stored directly in the database, and "
@@ -125,7 +169,13 @@ export const activityEntries: ActivityEntry[] = [
       + "additional security hardening to get it "
       + "production-ready."
     ],
-    tags: ["Next.js", "TypeScript", "FastAPI", "PostgreSQL", "Docker"],
+    tags: [
+      "Security",
+      "Cryptography",
+      "FastAPI",
+      "Next.js",
+      "PostgreSQL",
+    ],
     links: [
       {
         label: "GitHub",
